@@ -3,6 +3,7 @@ package com.jiang.android.push.miui;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.jiang.android.push.PushInterface;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
@@ -26,6 +27,19 @@ public class MiuiReceiver extends PushMessageReceiver {
     private String mUserAccount;
     private String mStartTime;
     private String mEndTime;
+
+
+    private static PushInterface mPushInterface;
+
+    public static void registerInterface(PushInterface pushInterface) {
+        if (mPushInterface == null)
+            mPushInterface = pushInterface;
+    }
+
+    public static PushInterface getPushInterface() {
+        return mPushInterface;
+    }
+
 
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage message) {

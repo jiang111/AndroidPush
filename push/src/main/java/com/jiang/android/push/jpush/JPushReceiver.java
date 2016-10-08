@@ -27,7 +27,8 @@ public class JPushReceiver extends BroadcastReceiver {
     private static PushInterface mPushInterface;
 
     public static void registerInterface(PushInterface pushInterface) {
-        mPushInterface = pushInterface;
+        if (mPushInterface == null)
+            mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {

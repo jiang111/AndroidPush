@@ -9,6 +9,8 @@ import com.huawei.android.pushagent.api.PushEventReceiver;
 import com.jiang.android.push.PushInterface;
 
 /**
+ *
+ *
  * Created by jiang on 2016/10/8.
  */
 
@@ -21,7 +23,8 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
     private static PushInterface mPushInterface;
 
     public static void registerInterface(PushInterface pushInterface) {
-        mPushInterface = pushInterface;
+        if (mPushInterface == null)
+            mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {

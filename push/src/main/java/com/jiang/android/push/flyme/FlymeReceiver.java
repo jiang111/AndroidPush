@@ -25,7 +25,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     private static PushInterface mPushInterface;
 
     public static void registerInterface(PushInterface pushInterface) {
-        mPushInterface = pushInterface;
+        if (mPushInterface == null)
+            mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {
@@ -43,7 +44,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     @Override
     public void onMessage(Context context, String s) {
-        //接收服务器推送的消息
+        //接收服务器推送的消息,这里要手动判断传递下来的是什么消息类型
+        // 200 正常 520 多个消息,其他都算失败
     }
 
     /**

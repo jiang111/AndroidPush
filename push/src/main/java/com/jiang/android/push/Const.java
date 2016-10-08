@@ -8,10 +8,10 @@ import android.text.TextUtils;
 
 public class Const {
 
-    private static String miui_app_id = "12";
-    private static String miui_app_key = "12";
-    private static String flyme_app_id = "12";
-    private static String flyme_app_key = "12";
+    private static String miui_app_id = null;
+    private static String miui_app_key = null;
+    private static String flyme_app_id = null;
+    private static String flyme_app_key = null;
 
     public static String getMiui_app_id() {
         if (TextUtils.isEmpty(miui_app_id)) {

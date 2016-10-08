@@ -21,6 +21,12 @@ import cn.jpush.android.api.JPushInterface;
 
 public class Push {
 
+    /**
+     * 初始化配置
+     *
+     * @param context
+     * @param debug
+     */
     public static void register(Context context, boolean debug) {
         if (context == null)
             return;
@@ -51,6 +57,12 @@ public class Push {
     }
 
 
+    /**
+     * 获取唯一的token
+     *
+     * @param context
+     * @return
+     */
     public static TokenModel getToken(Context context) {
         if (context == null)
             return null;

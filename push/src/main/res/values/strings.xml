@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Push</string>
-    <string name="hello">Hello World, JPush!</string>
     <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
     <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
     <string name="style_hint">style为数字</string>

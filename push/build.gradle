@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        manifestPlaceholders = [PNAME: "com.jiang.android.push",
+                                JPUSH_KEY:"1232134"
+        ]
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    /**
+     *   flyme
+     */
+    compile 'com.android.support:support-v4:24.+'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.1.0'
+    compile project(':common-1.0.10')
+    compile project(':gslb-3.0.9')
+    compile project(':push-internal-3.1.160901')
+    compile project(':usage-stats-2.5.1')
+    /**
+     *   jpush
+     */
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/HwPush_SDK_V2705.jar')
+    compile files('libs/MiPush_SDK_Client_3_1_2.jar')
+}

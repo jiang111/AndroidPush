@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jiang.android.push">
 
 
@@ -147,10 +148,12 @@
         <!-- 目前这个渠道统计功能的报表还未开放。-->
         <meta-data
             android:name="JPUSH_CHANNEL"
+            tools:replace="android:value"
             android:value="${JPUSH_CHANNEL}" />
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
+            tools:replace="android:value"
             android:value="${JPUSH_APPKEY}" />
 
         <!-- jpush end -->

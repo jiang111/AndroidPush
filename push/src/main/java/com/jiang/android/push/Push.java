@@ -1,6 +1,8 @@
 package com.jiang.android.push;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Process;
 import android.util.Log;
 
 import com.huawei.android.pushagent.api.PushManager;
@@ -14,6 +16,8 @@ import com.jiang.android.push.utils.Target;
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
+
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -56,7 +60,9 @@ public class Push {
             if (pushInterface != null) {
                 MiuiReceiver.registerInterface(pushInterface);
             }
-            MiPushClient.registerPush(context, Const.getMiui_app_id(), Const.getMiui_app_key());
+            if (shouldInit(context)) {
+                MiPushClient.registerPush(context, Const.getMiui_app_id(), Const.getMiui_app_key());
+            }
             if (debug) {
                 LoggerInterface newLogger = new LoggerInterface() {
                     @Override
@@ -97,6 +103,24 @@ public class Push {
         }
 
 
+    }
+
+    /**
+     * 用于小米推送的注册
+     * @param context
+     * @return
+     */
+    private static boolean shouldInit(Context context) {
+        ActivityManager am = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
+        String mainProcessName = context.getPackageName();
+        int myPid = Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void unregister(Context context) {

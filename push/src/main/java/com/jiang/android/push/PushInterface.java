@@ -9,21 +9,48 @@ import android.content.Context;
 
 public interface PushInterface {
 
-    void onRegister(Context context);
+    /**
+     * 注册成功之后回调
+     * @param context
+     * @param registerID
+     */
+    void onRegister(Context context, String registerID);
 
-    void onUnRegister(Context context, boolean b);
+    /**
+     * 取消注册成功
+     * @param context
+     * @param b
+     */
+    void onUnRegister(Context context, boolean bool);
 
+    /**
+     * 暂停推送
+     * @param context
+     */
     void onPaused(Context context);
 
+    /**
+     * 开启推送
+     * @param context
+     */
     void onResume(Context context);
 
-    void onToken(Context context, String token);
-
+    /**
+     * 通知下来之后
+     * @param context
+     * @param message
+     */
     void onMessage(Context context, Message message);
 
     /**
-     * 极光叫自定义消息
-     * flyme叫透传消息
+     * 通知栏被点击之后
+     * @param context
+     * @param message
+     */
+    void onMessageClicked(Context context, Message message);
+
+    /**
+     * 透传消息
      * @param context
      * @param message
      */

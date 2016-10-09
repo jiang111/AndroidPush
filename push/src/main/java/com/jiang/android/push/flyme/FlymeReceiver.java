@@ -37,8 +37,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     public void onRegister(Context context, String pushid) {
         //应用在接受返回的pushid
         if (mPushInterface != null) {
-            mPushInterface.onRegister(context);
-            mPushInterface.onToken(context, pushid);
+            mPushInterface.onRegister(context,pushid);
         }
     }
 

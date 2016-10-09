@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
+import com.jiang.android.push.utils.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,24 +41,56 @@ public class JPushReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+        int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+        String messageId = bundle.getString(JPushInterface.EXTRA_MSG_ID);
+        String extraMessage = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
             if (mPushInterface != null)
-                mPushInterface.onToken(context, regId);
+                mPushInterface.onRegister(context, regId);
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-            processCustomMessage(context, bundle);
+            Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + extraMessage);
+            if (mPushInterface != null) {
+                Message message = new Message();
+                message.setTitle(bundle.getString(JPushInterface.EXTRA_TITLE));
+                message.setMessageID(messageId);
+                message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
+                message.setExtra(extraMessage);
+                message.setTarget(Target.JPUSH);
+                mPushInterface.onCustomMessage(context, message);
+            }
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
+
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
-            int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+            if (mPushInterface != null) {
+                Message message = new Message();
+                message.setNotifyID(notifactionId);
+                message.setMessageID(messageId);
+                message.setTitle(bundle.getString(JPushInterface.EXTRA_TITLE));
+                message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
+                message.setExtra(extraMessage);
+                message.setTarget(Target.JPUSH);
+                mPushInterface.onMessage(context, message);
+            }
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+            if (mPushInterface != null) {
+                Message message = new Message();
+                message.setNotifyID(notifactionId);
+                message.setMessageID(messageId);
+                message.setTitle(bundle.getString(JPushInterface.EXTRA_TITLE));
+                message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
+                message.setExtra(extraMessage);
+                message.setTarget(Target.JPUSH);
+                mPushInterface.onMessageClicked(context, message);
+            }
 
 
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
@@ -105,10 +139,6 @@ public class JPushReceiver extends BroadcastReceiver {
         return sb.toString();
     }
 
-    //send msg to MainActivity
-    private void processCustomMessage(Context context, Bundle bundle) {
-
-    }
 
 
 }

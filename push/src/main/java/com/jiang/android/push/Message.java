@@ -1,15 +1,42 @@
 package com.jiang.android.push;
 
-import android.os.Bundle;
+import com.jiang.android.push.utils.Target;
 
 /**
  * Created by jiang on 2016/10/8.
  */
 
 public class Message {
+    private int notifyID;  //这个字段用于通知的消息类型，在透传中都是默认0
+    private String messageID;
     private String title;
-    private String desc;
-    private Bundle extra;
+    private String message;
+    private String extra;
+    private Target target;
+
+    public int getNotifyID() {
+        return notifyID;
+    }
+
+    public void setNotifyID(int notifyID) {
+        this.notifyID = notifyID;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }
+
+    public Target getTarget() {
+        return target;
+    }
+
+    public void setTarget(Target target) {
+        this.target = target;
+    }
 
     public String getTitle() {
         return title;
@@ -19,19 +46,19 @@ public class Message {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public Bundle getExtra() {
+    public String getExtra() {
         return extra;
     }
 
-    public void setExtra(Bundle extra) {
+    public void setExtra(String extra) {
         this.extra = extra;
     }
 }

@@ -26,3 +26,14 @@
 -keep class com.huawei.android. pushselfshow.**{*;}
 -keep class com.huawei.android. microkernel.**{*;}
 -keep class com.baidu.mapapi.**{*;}
+
+# jpush
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+#==================gson && protobuf==========================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+-keep class com.google.protobuf.** {*;}

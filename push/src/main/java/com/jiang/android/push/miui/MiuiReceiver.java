@@ -1,9 +1,14 @@
 package com.jiang.android.push.miui;
 
 import android.content.Context;
+import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
+import com.jiang.android.push.utils.JsonUtils;
+import com.jiang.android.push.utils.Target;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
@@ -13,10 +18,14 @@ import com.xiaomi.mipush.sdk.PushMessageReceiver;
 import java.util.List;
 
 /**
+ * 小米推送下来的消息运行在子线程
  * Created by jiang on 2016/10/8.
  */
 
 public class MiuiReceiver extends PushMessageReceiver {
+    private android.os.Handler mHandler = new android.os.Handler(Looper.getMainLooper());
+
+    private static final String TAG = "MiuiReceiver";
     private String mRegId;
     private long mResultCode = -1;
     private String mReason;
@@ -31,6 +40,11 @@ public class MiuiReceiver extends PushMessageReceiver {
 
     private static PushInterface mPushInterface;
 
+    /**
+     * 只允许第一次设置
+     *
+     * @param pushInterface
+     */
     public static void registerInterface(PushInterface pushInterface) {
         if (mPushInterface == null)
             mPushInterface = pushInterface;
@@ -42,7 +56,7 @@ public class MiuiReceiver extends PushMessageReceiver {
 
 
     @Override
-    public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
+    public void onReceivePassThroughMessage(final Context context, MiPushMessage message) {
         mMessage = message.getContent();
         if (!TextUtils.isEmpty(message.getTopic())) {
             mTopic = message.getTopic();
@@ -51,10 +65,31 @@ public class MiuiReceiver extends PushMessageReceiver {
         } else if (!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount = message.getUserAccount();
         }
+        if (mPushInterface != null) {
+            final Message result = new Message();
+            result.setMessageID(message.getMessageId());
+            result.setTitle(mTopic);
+            result.setExtra(mMessage);
+            result.setTarget(Target.MIUI);
+            try {
+                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
+            } catch (Exception e) {
+                Log.e(TAG, "onReceivePassThroughMessage: " + e.toString());
+                result.setExtra("{}");
+            }
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onCustomMessage(context, result);
+                }
+            });
+        }
+
+
     }
 
     @Override
-    public void onNotificationMessageClicked(Context context, MiPushMessage message) {
+    public void onNotificationMessageClicked(final Context context, MiPushMessage message) {
         mMessage = message.getContent();
         if (!TextUtils.isEmpty(message.getTopic())) {
             mTopic = message.getTopic();
@@ -63,10 +98,30 @@ public class MiuiReceiver extends PushMessageReceiver {
         } else if (!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount = message.getUserAccount();
         }
+        if (mPushInterface != null) {
+            final Message result = new Message();
+            result.setNotifyID(message.getNotifyId());
+            result.setMessageID(message.getMessageId());
+            result.setTitle(mTopic);
+            result.setMessage(mMessage);
+            result.setTarget(Target.MIUI);
+            try {
+                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
+            } catch (Exception e) {
+                Log.e(TAG, "onNotificationMessageClicked: " + e.toString());
+                result.setExtra("{}");
+            }
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onMessageClicked(context, result);
+                }
+            });
+        }
     }
 
     @Override
-    public void onNotificationMessageArrived(Context context, MiPushMessage message) {
+    public void onNotificationMessageArrived(final Context context, MiPushMessage message) {
         mMessage = message.getContent();
         if (!TextUtils.isEmpty(message.getTopic())) {
             mTopic = message.getTopic();
@@ -74,6 +129,24 @@ public class MiuiReceiver extends PushMessageReceiver {
             mAlias = message.getAlias();
         } else if (!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount = message.getUserAccount();
+        }
+        if (mPushInterface != null) {
+            final Message result = new Message();
+            result.setTitle(mTopic);
+            result.setMessage(mMessage);
+            result.setTarget(Target.MIUI);
+            try {
+                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
+            } catch (Exception e) {
+                Log.e(TAG, "onReceivePassThroughMessage: " + e.toString());
+                result.setExtra("{}");
+            }
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onMessage(context, result);
+                }
+            });
         }
     }
 
@@ -112,7 +185,7 @@ public class MiuiReceiver extends PushMessageReceiver {
     }
 
     @Override
-    public void onReceiveRegisterResult(Context context, MiPushCommandMessage message) {
+    public void onReceiveRegisterResult(final Context context, MiPushCommandMessage message) {
         String command = message.getCommand();
         List<String> arguments = message.getCommandArguments();
         String cmdArg1 = ((arguments != null && arguments.size() > 0) ? arguments.get(0) : null);
@@ -122,6 +195,15 @@ public class MiuiReceiver extends PushMessageReceiver {
                 mRegId = cmdArg1;
             }
         }
+        if (mPushInterface != null) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onRegister(context, mRegId);
+                }
+            });
+        }
+
     }
 
 }

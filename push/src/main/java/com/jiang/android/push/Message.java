@@ -62,4 +62,16 @@ public class Message {
     public void setExtra(String extra) {
         this.extra = extra;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "notifyID=" + notifyID +
+                ", messageID='" + messageID + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", extra='" + extra + '\'' +
+                ", target=" + target +
+                '}';
+    }
 }

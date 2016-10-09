@@ -4,6 +4,8 @@ import android.content.Context;
 
 /**
  * PushInterface 在所有的receiver中只能注册一次
+ * 注意: 在flyme的推送中，只会回调 onCustomMessage()方法
+ * 在华为推送中，不会回调onMessage() 方法
  * Created by jiang on 2016/10/8.
  */
 
@@ -11,6 +13,7 @@ public interface PushInterface {
 
     /**
      * 注册成功之后回调
+     *
      * @param context
      * @param registerID
      */
@@ -18,24 +21,28 @@ public interface PushInterface {
 
     /**
      * 取消注册成功
+     *
      * @param context
      */
     void onUnRegister(Context context);
 
     /**
      * 暂停推送
+     *
      * @param context
      */
     void onPaused(Context context);
 
     /**
      * 开启推送
+     *
      * @param context
      */
     void onResume(Context context);
 
     /**
      * 通知下来之后
+     *
      * @param context
      * @param message
      */
@@ -43,6 +50,7 @@ public interface PushInterface {
 
     /**
      * 通知栏被点击之后
+     *
      * @param context
      * @param message
      */
@@ -50,6 +58,7 @@ public interface PushInterface {
 
     /**
      * 透传消息
+     *
      * @param context
      * @param message
      */

@@ -10,9 +10,12 @@ import com.jiang.android.push.Push;
 
 public class App extends Application {
 
+    PushService mPushService = null;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Push.register(this, true);
+        mPushService = new PushService();
+        Push.register(this, true, mPushService);
     }
 }

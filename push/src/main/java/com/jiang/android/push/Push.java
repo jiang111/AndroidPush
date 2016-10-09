@@ -123,7 +123,7 @@ public class Push {
         return false;
     }
 
-    public void unregister(Context context) {
+    public static void unregister(Context context) {
         if (context == null)
             return;
         if (RomUtil.rom() == Target.EMUI) {

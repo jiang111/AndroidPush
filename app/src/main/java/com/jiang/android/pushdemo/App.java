@@ -18,7 +18,9 @@ public class App extends Application {
         super.onCreate();
         mPushService = new PushService();
         Const.setMiui_app_id("123456");
+        Const.setFlyme_app_id("123456");
         Const.setMiui_app_key("123456");
+        Const.setFlyme_app_key("123456");
         Push.register(this, true, mPushService);
     }
 }

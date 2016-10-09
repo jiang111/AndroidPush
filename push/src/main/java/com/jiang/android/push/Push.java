@@ -15,10 +15,6 @@ import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -53,9 +49,6 @@ public class Push {
                 EMHuaweiPushReceiver.registerInterface(pushInterface);
             }
             PushManager.requestToken(context);
-            Map<String, Long> maps = new HashMap<>();
-            maps.put("name", UUID.randomUUID().timestamp());
-            PushManager.setTags(context, maps);
             return;
 
         }
@@ -84,12 +77,6 @@ public class Push {
                 Logger.setLogger(context, newLogger);
             }
 
-
-//            if (pushInterface != null) {
-//                JPushReceiver.registerInterface(pushInterface);
-//            }
-//            JPushInterface.init(context);
-//            JPushInterface.setDebugMode(debug);
             return;
         }
         if (RomUtil.rom() == Target.FLYME) {
@@ -110,6 +97,29 @@ public class Push {
         }
 
 
+    }
+
+    public void unregister(Context context) {
+        if (context == null)
+            return;
+        if (RomUtil.rom() == Target.EMUI) {
+            PushManager.deregisterToken(context, getToken(context).getToken());
+            return;
+
+        }
+        if (RomUtil.rom() == Target.MIUI) {
+            MiPushClient.unregisterPush(context);
+            return;
+        }
+        if (RomUtil.rom() == Target.FLYME) {
+            com.meizu.cloud.pushsdk.PushManager.unRegister(context, Const.getFlyme_app_id(), Const.getFlyme_app_key());
+            return;
+        }
+
+        if (RomUtil.rom() == Target.JPUSH) {
+            JPushInterface.stopPush(context);
+            return;
+        }
     }
 
 

@@ -14,10 +14,10 @@ android {
 
         }
         manifestPlaceholders = [
-                JPUSH_PKGNAME :"library",
+                JPUSH_PKGNAME: "library",
                 JPUSH_APPKEY : rootProject.ext.JPUSH_APPKEY_DEBUG,
-                JPUSH_CHANNEL : rootProject.ext.JPUSH_CHANNEL,
-                PNAME : "library"
+                JPUSH_CHANNEL: rootProject.ext.JPUSH_CHANNEL,
+                PNAME        : "library"
         ]
 
     }
@@ -29,9 +29,10 @@ android {
     }
 }
 
-dependencies {    /**
- *   flyme
- */
+dependencies {
+    /**
+     *    flyme
+     */
     compile 'com.android.support:support-v4:24.+'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.squareup.okhttp:okhttp:2.1.0'
@@ -40,11 +41,10 @@ dependencies {    /**
     compile project(':push-internal-3.1.160901')
     compile project(':usage-stats-2.5.1')
     /**
-     *   jpush
+     *    jpush
      */
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/HwPush_SDK_V2705.jar')
     compile files('libs/MiPush_SDK_Client_3_1_2.jar')
     compile 'cn.jiguang:jpush:2.1.8'
-
 }

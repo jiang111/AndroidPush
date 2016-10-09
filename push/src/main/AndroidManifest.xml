@@ -204,8 +204,7 @@
                 <action android:name="com.huawei.android.push.intent.CLICK" />
                 <!-- 可选，查看push通道是否连接，不查看则不需要-->
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
-                <!-- 可选，标签、地理位置上报回应，不上报则不需要 -->
-                <action android:name="com.huawei.android.push.plugin.RESPONSE" />
+
             </intent-filter>
             <meta-data
                 android:name="CS_cloud_ablitity"
@@ -249,23 +248,7 @@
             android:name="com.huawei.android.pushagent.PushService"
             android:process=":pushservice"></service>
 
-        <!-- PushSDK:富媒体呈现页面，用于呈现服务器下发的富媒体消息 -->
-        <!-- locale|layoutDirection 切换语言后不重新创建activity -->
-        <activity
-            android:name="com.huawei.android.pushselfshow.richpush.RichPushActivity"
-            android:configChanges="orientation|screenSize|locale|layoutDirection"
-            android:process=":pushservice"
-            android:screenOrientation="portrait"
-            android:theme="@style/hwpush_NoActionBar">
-            <meta-data
-                android:name="hwc-theme"
-                android:value="androidhwext:style/Theme.Emui" />
-            <intent-filter>
-                <action android:name="com.huawei.android.push.intent.RICHPUSH" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name="com.huawei.android.pushselfshow.permission.RequestPermissionsActivity"

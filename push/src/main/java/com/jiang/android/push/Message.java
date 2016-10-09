@@ -3,6 +3,7 @@ package com.jiang.android.push;
 import com.jiang.android.push.utils.Target;
 
 /**
+ * 将消息整合成Message model
  * Created by jiang on 2016/10/8.
  */
 

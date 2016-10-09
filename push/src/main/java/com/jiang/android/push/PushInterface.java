@@ -19,9 +19,8 @@ public interface PushInterface {
     /**
      * 取消注册成功
      * @param context
-     * @param b
      */
-    void onUnRegister(Context context, boolean bool);
+    void onUnRegister(Context context);
 
     /**
      * 暂停推送

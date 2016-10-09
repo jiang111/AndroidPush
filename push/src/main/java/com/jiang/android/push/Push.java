@@ -34,6 +34,13 @@ public class Push {
         register(context, debug, null);
     }
 
+    /**
+     * 注册
+     *
+     * @param context
+     * @param debug
+     * @param pushInterface
+     */
     public static void register(Context context, boolean debug, PushInterface pushInterface) {
         if (context == null)
             return;
@@ -75,6 +82,42 @@ public class Push {
 
     }
 
+
+    /**
+     * 只有当第一次调用才会生效，后续调用不会生效
+     *
+     * @param pushInterface
+     */
+    public static void setPushInterface(PushInterface pushInterface) {
+        if (pushInterface == null)
+            return;
+        if (RomUtil.rom() == Target.EMUI) {
+            if (pushInterface != null) {
+                EMHuaweiPushReceiver.registerInterface(pushInterface);
+            }
+            return;
+
+        }
+        if (RomUtil.rom() == Target.MIUI) {
+            if (pushInterface != null) {
+                MiuiReceiver.registerInterface(pushInterface);
+            }
+            return;
+        }
+        if (RomUtil.rom() == Target.FLYME) {
+            if (pushInterface != null) {
+                FlymeReceiver.registerInterface(pushInterface);
+            }
+            return;
+        }
+
+        if (RomUtil.rom() == Target.JPUSH) {
+            if (pushInterface != null) {
+                JPushReceiver.registerInterface(pushInterface);
+            }
+            return;
+        }
+    }
 
     /**
      * 获取唯一的token

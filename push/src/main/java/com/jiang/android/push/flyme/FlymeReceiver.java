@@ -1,10 +1,11 @@
 package com.jiang.android.push.flyme;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
+import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
+import com.jiang.android.push.utils.Target;
 import com.meizu.cloud.pushsdk.MzPushMessageReceiver;
 import com.meizu.cloud.pushsdk.notification.PushNotificationBuilder;
 import com.meizu.cloud.pushsdk.platform.message.PushSwitchStatus;
@@ -15,6 +16,7 @@ import com.meizu.cloud.pushsdk.platform.message.UnRegisterStatus;
 
 /**
  * flyme push
+ * 如果发现onregister回调了两次，那就得删除相关的代码，主要是因为flyme的sdk分老版本和新版本
  * Created by jiang on 2016/10/8.
  */
 
@@ -37,32 +39,36 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     public void onRegister(Context context, String pushid) {
         //应用在接受返回的pushid
         if (mPushInterface != null) {
-            mPushInterface.onRegister(context,pushid);
+            mPushInterface.onRegister(context, pushid);
         }
     }
 
-    @Override
-    public void onMessage(Context context, String s) {
-        //接收服务器推送的消息,这里要手动判断传递下来的是什么消息类型
-        // 200 正常 520 多个消息,其他都算失败
-    }
-
     /**
-     * 3.0 down
+     * 若该回调有数据，就证明是透传消息，否则全部都是通知消息
      *
      * @param context
-     * @param intent
+     * @param s
      */
     @Override
-    public void onMessage(Context context, Intent intent) {
-        super.onMessage(context, intent);
+    public void onMessage(Context context, String s) {
+        if (mPushInterface != null) {
+            Message message = new Message();
+            message.setMessageID("");
+            message.setTarget(Target.FLYME);
+            message.setExtra(s);
+            mPushInterface.onCustomMessage(context, message);
+        }
+
     }
+
 
     @Override
     public void onUnRegister(Context context, boolean b) {
         //调用PushManager.unRegister(context）方法后，会在此回调反注册状态
-        if (mPushInterface != null) {
-            mPushInterface.onUnRegister(context, b);
+        if (b == true) {
+            if (mPushInterface != null) {
+                mPushInterface.onUnRegister(context);
+            }
         }
     }
 
@@ -81,12 +87,18 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     public void onRegisterStatus(Context context, RegisterStatus registerStatus) {
         Log.i(TAG, "onRegisterStatus " + registerStatus);
         //新版订阅回调
+        if (mPushInterface != null) {
+            mPushInterface.onRegister(context, registerStatus.getPushId());
+        }
     }
 
     @Override
     public void onUnRegisterStatus(Context context, UnRegisterStatus unRegisterStatus) {
         Log.i(TAG, "onUnRegisterStatus " + unRegisterStatus);
         //新版反订阅回调
+        if (mPushInterface != null) {
+            mPushInterface.onUnRegister(context);
+        }
     }
 
     @Override

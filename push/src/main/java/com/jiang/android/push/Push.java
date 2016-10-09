@@ -1,6 +1,7 @@
 package com.jiang.android.push;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.huawei.android.pushagent.api.PushManager;
 import com.jiang.android.push.emui.EMHuaweiPushReceiver;
@@ -10,6 +11,8 @@ import com.jiang.android.push.miui.MiuiReceiver;
 import com.jiang.android.push.model.TokenModel;
 import com.jiang.android.push.utils.RomUtil;
 import com.jiang.android.push.utils.Target;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.HashMap;
@@ -23,6 +26,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class Push {
+    private static final String TAG = "Push";
 
     /**
      * 初始化配置
@@ -60,6 +64,32 @@ public class Push {
                 MiuiReceiver.registerInterface(pushInterface);
             }
             MiPushClient.registerPush(context, Const.getMiui_app_id(), Const.getMiui_app_key());
+            if (debug) {
+                LoggerInterface newLogger = new LoggerInterface() {
+                    @Override
+                    public void setTag(String tag) {
+                        // ignore
+                    }
+
+                    @Override
+                    public void log(String content, Throwable t) {
+                        Log.d(TAG, "miui:" + content, t);
+                    }
+
+                    @Override
+                    public void log(String content) {
+                        Log.d(TAG, "miui: " + content);
+                    }
+                };
+                Logger.setLogger(context, newLogger);
+            }
+
+
+//            if (pushInterface != null) {
+//                JPushReceiver.registerInterface(pushInterface);
+//            }
+//            JPushInterface.init(context);
+//            JPushInterface.setDebugMode(debug);
             return;
         }
         if (RomUtil.rom() == Target.FLYME) {

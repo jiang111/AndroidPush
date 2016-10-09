@@ -2,6 +2,7 @@ package com.jiang.android.pushdemo;
 
 import android.app.Application;
 
+import com.jiang.android.push.Const;
 import com.jiang.android.push.Push;
 
 /**
@@ -16,6 +17,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mPushService = new PushService();
+        Const.setMiui_app_id("123456");
+        Const.setMiui_app_key("123456");
         Push.register(this, true, mPushService);
     }
 }

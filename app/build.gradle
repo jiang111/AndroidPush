@@ -9,6 +9,17 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : rootProject.ext.JPUSH_APPKEY_DEBUG,
+                JPUSH_CHANNEL : rootProject.ext.JPUSH_CHANNEL,
+                PNAME : applicationId
+        ]
+
 
     }
     buildTypes {
@@ -17,10 +28,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.1'
+
     compile project(':push')
 }

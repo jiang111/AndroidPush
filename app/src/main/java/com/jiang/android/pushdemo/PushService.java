@@ -12,7 +12,7 @@ import com.jiang.android.push.PushInterface;
 
 public class PushService implements PushInterface {
 
-    private static final String TAG = "PushService";
+    private static final String TAG = "PushServiceforMyOwn";
 
     @Override
     public void onRegister(Context context, String registerID) {

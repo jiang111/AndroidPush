@@ -72,8 +72,8 @@ public class JPushReceiver extends BroadcastReceiver {
                 Message message = new Message();
                 message.setNotifyID(notifactionId);
                 message.setMessageID(messageId);
-                message.setTitle(bundle.getString(JPushInterface.EXTRA_TITLE));
-                message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
+                message.setTitle(bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE));
+                message.setMessage(bundle.getString(JPushInterface.EXTRA_ALERT));
                 message.setExtra(extraMessage);
                 message.setTarget(Target.JPUSH);
                 mPushInterface.onMessage(context, message);

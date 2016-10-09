@@ -9,8 +9,15 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [PNAME: "com.jiang.android.push",
-                                JPUSH_KEY:"1232134"
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME :"library",
+                JPUSH_APPKEY : rootProject.ext.JPUSH_APPKEY_DEBUG,
+                JPUSH_CHANNEL : rootProject.ext.JPUSH_CHANNEL,
+                PNAME : "library"
         ]
 
     }
@@ -22,10 +29,9 @@ android {
     }
 }
 
-dependencies {
-    /**
-     *   flyme
-     */
+dependencies {    /**
+ *   flyme
+ */
     compile 'com.android.support:support-v4:24.+'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.squareup.okhttp:okhttp:2.1.0'
@@ -39,4 +45,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/HwPush_SDK_V2705.jar')
     compile files('libs/MiPush_SDK_Client_3_1_2.jar')
+    compile 'cn.jiguang:jpush:2.1.8'
+
 }

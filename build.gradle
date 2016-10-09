@@ -12,6 +12,12 @@ buildscript {
     }
 }
 
+ext {
+    JPUSH_APPKEY_DEBUG  = "3df7e06ec9bf5e79abdc4a6a"
+    JPUSH_APPKEY_RELEASE  = "3df7e06ec9bf5e79abdc4a62"
+    JPUSH_CHANNEL  = "developer-default"
+}
+
 allprojects {
     repositories {
         jcenter()

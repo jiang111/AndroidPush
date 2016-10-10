@@ -2,10 +2,11 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:text="sdsds"
-    android:textSize="12sp">
+    android:layout_marginBottom="5dp"
+    android:gravity="center"
+    android:textSize="12sp"
+    tools:text="sdsds">
 
 </TextView>

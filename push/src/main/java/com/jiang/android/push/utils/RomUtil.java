@@ -38,16 +38,17 @@ public class RomUtil {
      * @return
      */
     private static boolean isMIUI() {
-        try {
-            final BuildProperties prop = BuildProperties.newInstance();
-            /*String rom = "" + prop.getProperty(KEY_MIUI_VERSION_CODE, null) + prop.getProperty(KEY_MIUI_VERSION_NAME, null)+prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null);
-            Log.d("Android_Rom", rom);*/
-            return prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
-                    || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
-                    || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null;
-        } catch (final IOException e) {
-            return false;
-        }
+        return false;
+//        try {
+//            final BuildProperties prop = BuildProperties.newInstance();
+//            /*String rom = "" + prop.getProperty(KEY_MIUI_VERSION_CODE, null) + prop.getProperty(KEY_MIUI_VERSION_NAME, null)+prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null);
+//            Log.d("Android_Rom", rom);*/
+//            return prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
+//                    || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
+//                    || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null;
+//        } catch (final IOException e) {
+//            return false;
+//        }
     }
 
     /**

@@ -41,13 +41,12 @@ public class MiuiReceiver extends PushMessageReceiver {
     private static PushInterface mPushInterface;
 
     /**
-     * 只允许第一次设置
      *
      * @param pushInterface
      */
     public static void registerInterface(PushInterface pushInterface) {
-        if (mPushInterface == null)
-            mPushInterface = pushInterface;
+
+        mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {
@@ -204,6 +203,10 @@ public class MiuiReceiver extends PushMessageReceiver {
             });
         }
 
+    }
+
+    public static void clearPushInterface() {
+        mPushInterface = null;
     }
 
 }

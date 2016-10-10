@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         close.setOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
+        mDatas.add("--------- log ----------");
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new BaseAdapter() {
             @Override
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register() {
+//        Push.register(this,true,new PushService());
         Push.register(this, true, new PushInterface() {
             @Override
             public void onRegister(Context context, String registerID) {
@@ -108,19 +110,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onMessage(Context context, Message message) {
 
-                addData("onMessage: " + message.toString());
+                addData(message.toString());
             }
 
             @Override
             public void onMessageClicked(Context context, Message message) {
 
-                addData("onMessageClicked: " + message.toString());
+                addData("MessageClicked: " + message.toString());
             }
 
             @Override
             public void onCustomMessage(Context context, Message message) {
 
-                addData("onCustomMessage: " + message.toString());
+                addData(message.toString());
             }
         });
 

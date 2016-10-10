@@ -27,7 +27,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     private static PushInterface mPushInterface;
 
     public static void registerInterface(PushInterface pushInterface) {
-        if (mPushInterface == null)
+
             mPushInterface = pushInterface;
     }
 
@@ -111,5 +111,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     public void onSubAliasStatus(Context context, SubAliasStatus subAliasStatus) {
         Log.i(TAG, "onSubAliasStatus " + subAliasStatus);
         //别名回调
+    }
+    public static void clearPushInterface() {
+        mPushInterface = null;
     }
 }

@@ -46,6 +46,7 @@ public class Push {
      * @param pushInterface
      */
     public static void register(Context context, boolean debug, PushInterface pushInterface) {
+        Log.i(TAG, "start register: ");
         if (context == null)
             return;
         if (RomUtil.rom() == Target.EMUI) {
@@ -107,6 +108,7 @@ public class Push {
 
     /**
      * 用于小米推送的注册
+     *
      * @param context
      * @return
      */
@@ -127,20 +129,24 @@ public class Push {
         if (context == null)
             return;
         if (RomUtil.rom() == Target.EMUI) {
+            EMHuaweiPushReceiver.clearPushInterface();
             PushManager.deregisterToken(context, getToken(context).getToken());
             return;
 
         }
         if (RomUtil.rom() == Target.MIUI) {
+            MiuiReceiver.clearPushInterface();
             MiPushClient.unregisterPush(context);
             return;
         }
         if (RomUtil.rom() == Target.FLYME) {
+            FlymeReceiver.clearPushInterface();
             com.meizu.cloud.pushsdk.PushManager.unRegister(context, Const.getFlyme_app_id(), Const.getFlyme_app_key());
             return;
         }
 
         if (RomUtil.rom() == Target.JPUSH) {
+            JPushReceiver.clearPushInterface();
             JPushInterface.stopPush(context);
             return;
         }
@@ -230,14 +236,14 @@ public class Push {
         if (RomUtil.rom() == Target.MIUI) {
             MiPushClient.pausePush(context, null);
             if (MiuiReceiver.getPushInterface() != null) {
-                MiuiReceiver.getPushInterface().onResume(context);
+                MiuiReceiver.getPushInterface().onPaused(context);
             }
             return;
         }
         if (RomUtil.rom() == Target.FLYME) {
             com.meizu.cloud.pushsdk.PushManager.unRegister(context, Const.getFlyme_app_id(), Const.getFlyme_app_key());
             if (FlymeReceiver.getPushInterface() != null) {
-                FlymeReceiver.getPushInterface().onResume(context);
+                FlymeReceiver.getPushInterface().onPaused(context);
             }
             return;
         }
@@ -246,7 +252,7 @@ public class Push {
             if (!JPushInterface.isPushStopped(context)) {
                 JPushInterface.stopPush(context);
                 if (JPushReceiver.getPushInterface() != null) {
-                    JPushReceiver.getPushInterface().onResume(context);
+                    JPushReceiver.getPushInterface().onPaused(context);
                 }
             }
             return;

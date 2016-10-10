@@ -24,8 +24,7 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
     private static PushInterface mPushInterface;
 
     public static void registerInterface(PushInterface pushInterface) {
-        if (mPushInterface == null)
-            mPushInterface = pushInterface;
+        mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {
@@ -123,5 +122,9 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
             //   showPushMessage(PustDemoActivity.RECEIVE_TAG_LBS_MSG, message + isSuccess);
         }
         super.onEvent(context, event, extras);
+    }
+
+    public static void clearPushInterface() {
+        mPushInterface = null;
     }
 }

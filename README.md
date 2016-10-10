@@ -12,17 +12,18 @@
                 PNAME : applicationId   //其实PNAME字段和JPUSH_PKGNAME都是指应用程序的包名
         ]
 ```
-以用来覆盖掉library中的字段数据。
 
->4. 在自己项目下的manifest文件中manifest节点下添加如下代码:
+>4. 在自己项目下的manifest文件中添加如下代码:
 ```
+ <!-- manifest节点下 -->
  <permission
         android:name="${PNAME}.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
     <uses-permission android:name="${PNAME}.permission.MIPUSH_RECEIVE" />
 ```
-application节点下:
+
 ```
+ <!-- application节点下 -->
  <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="${JPUSH_CHANNEL}"

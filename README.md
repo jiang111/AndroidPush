@@ -13,6 +13,7 @@
         ]
 ```
 以用来覆盖掉library中的字段数据。
+
 >4. 在自己项目下的manifest文件中manifest节点下添加如下代码:
 ```
  <permission

@@ -1,4 +1,6 @@
 # AndroidPush
+[![](https://jitpack.io/v/jiang111/AndroidPush.svg)](https://jitpack.io/#jiang111/AndroidPush)
+
 
 ### 使用(详细使用请看app下的demo)
 >1. 调用Push的register()方法即可。在调用该方法之前，请确保已经设置了Const类中小米和魅族的app_key和app_id然后，代码会判断当前手机的类型，如果是小米则启动小米推送，华为则启用华为推送，flyme则启用flyme推送，其他情况下启用极光推送

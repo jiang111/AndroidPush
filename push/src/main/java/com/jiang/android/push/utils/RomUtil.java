@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  */
 
 public class RomUtil {
-    private static Target mTarget = null;
+    private static Target mTarget = Target.MIUI;
     private static final String KEY_EMUI_VERSION_CODE = "ro.build.version.emui";
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
@@ -38,17 +38,16 @@ public class RomUtil {
      * @return
      */
     private static boolean isMIUI() {
-        return false;
-//        try {
-//            final BuildProperties prop = BuildProperties.newInstance();
-//            /*String rom = "" + prop.getProperty(KEY_MIUI_VERSION_CODE, null) + prop.getProperty(KEY_MIUI_VERSION_NAME, null)+prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null);
-//            Log.d("Android_Rom", rom);*/
-//            return prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
-//                    || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
-//                    || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null;
-//        } catch (final IOException e) {
-//            return false;
-//        }
+        try {
+            final BuildProperties prop = BuildProperties.newInstance();
+            /*String rom = "" + prop.getProperty(KEY_MIUI_VERSION_CODE, null) + prop.getProperty(KEY_MIUI_VERSION_NAME, null)+prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null);
+            Log.d("Android_Rom", rom);*/
+            return prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
+                    || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
+                    || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null;
+        } catch (final IOException e) {
+            return false;
+        }
     }
 
     /**

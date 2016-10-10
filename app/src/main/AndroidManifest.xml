@@ -104,6 +104,30 @@
                 <category android:name="${PNAME}"></category>
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.huawei.android.pushselfshow.richpush.RichPushActivity"
+            android:configChanges="orientation|screenSize|locale|layoutDirection"
+            android:process=":pushservice"
+            android:screenOrientation="portrait"
+            android:theme="@style/hwpush_NoActionBar">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui" />
+            <intent-filter>
+                <action android:name="com.huawei.android.push.intent.RICHPUSH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.huawei.android.pushselfshow.permission.RequestPermissionsActivity"
+            android:configChanges="orientation|screenSize|locale|layoutDirection"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar"></activity>
+
+
     </application>
 
 

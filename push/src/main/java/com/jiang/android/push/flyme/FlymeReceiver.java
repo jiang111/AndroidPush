@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
+import com.jiang.android.push.utils.JHandler;
 import com.jiang.android.push.utils.Target;
 import com.meizu.cloud.pushsdk.MzPushMessageReceiver;
 import com.meizu.cloud.pushsdk.notification.PushNotificationBuilder;
@@ -28,7 +29,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     public static void registerInterface(PushInterface pushInterface) {
 
-            mPushInterface = pushInterface;
+        mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {
@@ -36,10 +37,16 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     }
 
     @Override
-    public void onRegister(Context context, String pushid) {
+    public void onRegister(final Context context, final String pushid) {
         //应用在接受返回的pushid
         if (mPushInterface != null) {
-            mPushInterface.onRegister(context, pushid);
+            JHandler.handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onRegister(context, pushid);
+
+                }
+            });
         }
     }
 
@@ -50,24 +57,36 @@ public class FlymeReceiver extends MzPushMessageReceiver {
      * @param s
      */
     @Override
-    public void onMessage(Context context, String s) {
+    public void onMessage(final Context context, String s) {
         if (mPushInterface != null) {
-            Message message = new Message();
+            final Message message = new Message();
             message.setMessageID("");
             message.setTarget(Target.FLYME);
             message.setExtra(s);
-            mPushInterface.onCustomMessage(context, message);
+            JHandler.handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onCustomMessage(context, message);
+
+                }
+            });
         }
 
     }
 
 
     @Override
-    public void onUnRegister(Context context, boolean b) {
+    public void onUnRegister(final Context context, boolean b) {
         //调用PushManager.unRegister(context）方法后，会在此回调反注册状态
         if (b == true) {
             if (mPushInterface != null) {
-                mPushInterface.onUnRegister(context);
+                JHandler.handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPushInterface.onUnRegister(context);
+
+                    }
+                });
             }
         }
     }
@@ -84,20 +103,30 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     }
 
     @Override
-    public void onRegisterStatus(Context context, RegisterStatus registerStatus) {
+    public void onRegisterStatus(final Context context, final RegisterStatus registerStatus) {
         Log.i(TAG, "onRegisterStatus " + registerStatus);
         //新版订阅回调
         if (mPushInterface != null) {
-            mPushInterface.onRegister(context, registerStatus.getPushId());
+            JHandler.handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onRegister(context, registerStatus.getPushId());
+                }
+            });
         }
     }
 
     @Override
-    public void onUnRegisterStatus(Context context, UnRegisterStatus unRegisterStatus) {
+    public void onUnRegisterStatus(final Context context, UnRegisterStatus unRegisterStatus) {
         Log.i(TAG, "onUnRegisterStatus " + unRegisterStatus);
         //新版反订阅回调
         if (mPushInterface != null) {
-            mPushInterface.onUnRegister(context);
+            JHandler.handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onUnRegister(context);
+                }
+            });
         }
     }
 
@@ -112,6 +141,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
         Log.i(TAG, "onSubAliasStatus " + subAliasStatus);
         //别名回调
     }
+
     public static void clearPushInterface() {
         mPushInterface = null;
     }

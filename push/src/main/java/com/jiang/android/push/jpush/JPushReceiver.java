@@ -47,19 +47,19 @@ public class JPushReceiver extends BroadcastReceiver {
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
-            if (JPushReceiver.getPushInterface() != null)
-                JPushReceiver.getPushInterface().onRegister(context, regId);
+            if (mPushInterface != null)
+                mPushInterface.onRegister(context, regId);
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + extraMessage);
-            if (JPushReceiver.getPushInterface() != null) {
+            if (mPushInterface != null) {
                 Message message = new Message();
                 message.setTitle(bundle.getString(JPushInterface.EXTRA_TITLE));
                 message.setMessageID(messageId);
                 message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
                 message.setExtra(extraMessage);
                 message.setTarget(Target.JPUSH);
-                JPushReceiver.getPushInterface().onCustomMessage(context, message);
+                mPushInterface.onCustomMessage(context, message);
             }
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
@@ -67,7 +67,7 @@ public class JPushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
 
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-            if (JPushReceiver.getPushInterface() != null) {
+            if (mPushInterface != null) {
                 Message message = new Message();
                 message.setNotifyID(notifactionId);
                 message.setMessageID(messageId);
@@ -75,12 +75,12 @@ public class JPushReceiver extends BroadcastReceiver {
                 message.setMessage(bundle.getString(JPushInterface.EXTRA_ALERT));
                 message.setExtra(extraMessage);
                 message.setTarget(Target.JPUSH);
-                JPushReceiver.getPushInterface().onMessage(context, message);
+                mPushInterface.onMessage(context, message);
             }
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-            if (JPushReceiver.getPushInterface() != null) {
+            if (mPushInterface != null) {
                 Message message = new Message();
                 message.setNotifyID(notifactionId);
                 message.setMessageID(messageId);
@@ -88,7 +88,7 @@ public class JPushReceiver extends BroadcastReceiver {
                 message.setMessage(bundle.getString(JPushInterface.EXTRA_ALERT));
                 message.setExtra(extraMessage);
                 message.setTarget(Target.JPUSH);
-                JPushReceiver.getPushInterface().onMessageClicked(context, message);
+                mPushInterface.onMessageClicked(context, message);
             }
 
 

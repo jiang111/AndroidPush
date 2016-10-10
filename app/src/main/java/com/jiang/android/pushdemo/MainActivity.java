@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jiang.android.push.Message;
 import com.jiang.android.push.Push;
@@ -70,18 +71,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.register:
                 register();
+                toast("开始注册");
                 break;
             case R.id.unregister:
                 Push.unregister(this);
+                toast("取消注册");
                 break;
             case R.id.open:
                 Push.start(this);
+                toast("开启推送");
                 break;
             case R.id.close:
                 Push.stop(this);
+                toast("开始暂停");
                 break;
         }
 
+    }
+
+    private void toast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private void register() {

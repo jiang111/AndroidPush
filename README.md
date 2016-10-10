@@ -5,14 +5,29 @@
 ### 使用(详细使用请看app下的demo)
 >1. 调用Push的register()方法即可。在调用该方法之前，请确保已经设置了Const类中小米和魅族的app_key和app_id然后，代码会判断当前手机的类型，如果是小米则启动小米推送，华为则启用华为推送，flyme则启用flyme推送，其他情况下启用极光推送
 >2. 实现PushInterface接口，然后根据各个回调方法做相关的任务
->3. 在自己项目下的gradle文件添加
+>3. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
 ```
- manifestPlaceholders = [
+   allprojects {
+   		repositories {
+   			...
+   			maven { url "https://jitpack.io" }
+   		}
+   	}
+   	dependencies {
+   		compile 'com.github.User:Repo:Tag'
+   	}
+    defaultConfig {
+        ...
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+        }
+        manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "sdsds",
+                JPUSH_APPKEY : "3df7e06ec9bf5e79abdc4a6a",
                 JPUSH_CHANNEL : "develop",
-                PNAME : applicationId   //其实PNAME字段和JPUSH_PKGNAME都是指应用程序的包名
+                PNAME : applicationId
         ]
+    }
 ```
 
 >4. 在自己项目下的manifest文件中添加如下代码:

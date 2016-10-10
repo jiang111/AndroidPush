@@ -7,7 +7,7 @@ import com.jiang.android.push.utils.Target;
  * Created by jiang on 2016/10/8.
  */
 
-public class Message {
+public final class Message {
     private int notifyID;  //这个字段用于通知的消息类型，在透传中都是默认0
     private String messageID;
     private String title;

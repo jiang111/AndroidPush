@@ -32,7 +32,7 @@ android {
 
 dependencies {
     /**
-     *    flyme
+     *     flyme
      */
     compile 'com.android.support:support-v4:24.+'
     compile 'com.android.volley:volley:1.0.0'
@@ -42,10 +42,8 @@ dependencies {
     provided project(':push-internal-3.1.160901')
     provided project(':usage-stats-2.5.1')
     /**
-     *    jpush
+     *     jpush
      */
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/HwPush_SDK_V2705.jar')
-    compile files('libs/MiPush_SDK_Client_3_1_2.jar')
     compile 'cn.jiguang:jpush:2.1.8'
 }

@@ -58,6 +58,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
      */
     @Override
     public void onMessage(final Context context, String s) {
+        Log.i(TAG, "onMessage: " + s.toString());
         if (mPushInterface != null) {
             final Message message = new Message();
             message.setMessageID("");
@@ -100,6 +101,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     @Override
     public void onPushStatus(Context context, PushSwitchStatus pushSwitchStatus) {
         //检查通知栏和透传消息开关状态回调
+        Log.i(TAG, "onPushStatus: " + pushSwitchStatus.toString());
     }
 
     @Override

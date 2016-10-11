@@ -46,6 +46,26 @@
     <!--这里com.xiaomi.mipushdemo改成app的包名-->
     <!-- xiaomi end -->
 
+
+    <!-- flyme  -->
+
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE"></uses-permission>
+    <permission
+        android:name="${PNAME}.push.permission.MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${PNAME}.push.permission.MESSAGE"></uses-permission>
+
+    <!--  兼容flyme3.0配置权限-->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+    <permission
+        android:name="${PNAME}.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"></permission>
+    <uses-permission android:name="${PNAME}.permission.C2D_MESSAGE" />
+
+
+    <!-- flyme end  -->
+
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -134,29 +154,10 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="${JPUSH_APPKEY}"/>
+            android:value="${JPUSH_APPKEY}" />
 
         <!-- jpush end -->
 
-
-        <!-- flyme  -->
-
-        <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE"></uses-permission>
-        <permission
-            android:name="${PNAME}.push.permission.MESSAGE"
-            android:protectionLevel="signature" />
-        <uses-permission android:name="${PNAME}.push.permission.MESSAGE"></uses-permission>
-
-        <!--  兼容flyme3.0配置权限-->
-        <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
-        <permission
-            android:name="${PNAME}.permission.C2D_MESSAGE"
-            android:protectionLevel="signature"></permission>
-        <uses-permission android:name="${PNAME}.permission.C2D_MESSAGE" />
-
-
-
-        <!-- flyme end  -->
 
         <!--  huawei  -->
 

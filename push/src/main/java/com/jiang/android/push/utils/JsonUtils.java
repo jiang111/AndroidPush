@@ -102,14 +102,14 @@ public class JsonUtils {
                 Map.Entry entry = (Map.Entry) i.next();
                 String key = (String) entry.getKey();
                 Object value = entry.getValue();
-                temp.append("\"" + key + "\":");
+                temp.append("\"" ).append( key ).append( "\":");
                 if (value instanceof Map<?, ?>) {
-                    temp.append(setJson((Map<String, Object>) value) + ",");
+                    temp.append(setJson((Map<String, Object>) value) ).append( ",");
                 } else if (value instanceof List<?>) {
                     temp.append(setList((List<Map<String, Object>>) value)
-                            + ",");
+                    ).append( ",");
                 } else {
-                    temp.append(value + ",");
+                    temp.append(value ).append( ",");
                 }
             }
             if (temp.length() > 1) {
@@ -130,7 +130,7 @@ public class JsonUtils {
      */
     private static String setList(List<Map<String, Object>> list)
             throws Exception {
-        String jsonL = "";
+        String jsonL;
         StringBuffer temp = new StringBuffer();
         temp.append("[");
         for (int i = 0; i < list.size(); i++) {
@@ -138,7 +138,7 @@ public class JsonUtils {
             if (i == list.size() - 1) {
                 temp.append(setJson(m));
             } else {
-                temp.append(setJson(m) + ",");
+                temp.append(setJson(m) ).append( ",");
             }
         }
         if (temp.length() > 1) {

@@ -3,7 +3,6 @@ package com.jiang.android.push;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Process;
-import android.util.Log;
 
 import com.huawei.android.pushagent.api.PushManager;
 import com.jiang.android.push.emui.EMHuaweiPushReceiver;
@@ -11,6 +10,7 @@ import com.jiang.android.push.flyme.FlymeReceiver;
 import com.jiang.android.push.jpush.JPushReceiver;
 import com.jiang.android.push.miui.MiuiReceiver;
 import com.jiang.android.push.model.TokenModel;
+import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.RomUtil;
 import com.jiang.android.push.utils.Target;
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
@@ -26,7 +26,6 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class Push {
-    private static final String TAG = "Push";
 
     /**
      * 初始化配置
@@ -46,7 +45,6 @@ public class Push {
      * @param pushInterface
      */
     public static void register(Context context, boolean debug, PushInterface pushInterface) {
-        Log.i(TAG, "start register: ");
         if (context == null)
             return;
         if (RomUtil.rom() == Target.EMUI) {
@@ -73,12 +71,12 @@ public class Push {
 
                     @Override
                     public void log(String content, Throwable t) {
-                        Log.d(TAG, "miui:" + content, t);
+                        L.i("content" + content + " exception: " + t.toString());
                     }
 
                     @Override
                     public void log(String content) {
-                        Log.d(TAG, "miui: " + content);
+                        L.i("miui: " + content);
                     }
                 };
                 Logger.setLogger(context, newLogger);

@@ -8,6 +8,7 @@ import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
 import com.jiang.android.push.utils.JHandler;
 import com.jiang.android.push.utils.JsonUtils;
+import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.Target;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
@@ -71,7 +72,7 @@ public class MiuiReceiver extends PushMessageReceiver {
             try {
                 result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
             } catch (Exception e) {
-                Log.e(TAG, "onReceivePassThroughMessage: " + e.toString());
+                L.i("onReceivePassThroughMessage: " + e.toString());
                 result.setExtra("{}");
             }
             JHandler.handler().post(new Runnable() {
@@ -135,7 +136,7 @@ public class MiuiReceiver extends PushMessageReceiver {
             try {
                 result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
             } catch (Exception e) {
-                Log.e(TAG, "onReceivePassThroughMessage: " + e.toString());
+                L.i("onReceivePassThroughMessage: " + e.toString());
                 result.setExtra("{}");
             }
             JHandler.handler().post(new Runnable() {

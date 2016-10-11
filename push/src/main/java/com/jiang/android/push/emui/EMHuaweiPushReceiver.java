@@ -3,12 +3,12 @@ package com.jiang.android.push.emui;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.huawei.android.pushagent.api.PushEventReceiver;
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
 import com.jiang.android.push.utils.JsonUtils;
+import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.Target;
 
 /**
@@ -19,7 +19,6 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
 
     private static String mToken = null;
 
-    private static final String TAG = "EMHuaweiPushReceiver";
 
     private static PushInterface mPushInterface;
 
@@ -40,7 +39,7 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
     public void onToken(Context context, String token, Bundle extras) {
         String belongId = extras.getString("belongId");
         String content = "获取token和belongId成功，token = " + token + ",belongId = " + belongId;
-        Log.d(TAG, content);
+        L.i(content);
         mToken = token;
         if (mPushInterface != null) {
             mPushInterface.onRegister(context, token);
@@ -64,7 +63,7 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
                 message.setTarget(Target.EMUI);
                 mPushInterface.onCustomMessage(context, message);
             }
-            Log.d(TAG, content);
+            L.i(content);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +90,7 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
                 manager.cancel(notifyId);
             }
             String content = "收到通知附加消息： " + extras.getString(BOUND_KEY.pushMsgKey);
-            Log.d(TAG, content);
+            L.i(content);
             try {
                 if (mPushInterface != null) {
                     Message message = new Message();
@@ -118,7 +117,7 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
             } else if (TYPE_TAG == reportType) {
                 message = "TAG report result :";
             }
-            Log.d(TAG, message + isSuccess);
+            L.i(message + isSuccess);
             //   showPushMessage(PustDemoActivity.RECEIVE_TAG_LBS_MSG, message + isSuccess);
         }
         super.onEvent(context, event, extras);

@@ -4,8 +4,6 @@
 
 
     <!-- Required -->
-
-    <!-- Required -->
     <uses-permission android:name="${JPUSH_PKGNAME}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />

@@ -1,11 +1,13 @@
 package com.jiang.android.push.flyme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
 import com.jiang.android.push.utils.JHandler;
+import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.Target;
 import com.meizu.cloud.pushsdk.MzPushMessageReceiver;
 import com.meizu.cloud.pushsdk.notification.PushNotificationBuilder;
@@ -39,6 +41,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     @Override
     public void onRegister(final Context context, final String pushid) {
         //应用在接受返回的pushid
+        L.i("onRegister called pushId: " + pushid);
         if (mPushInterface != null) {
             JHandler.handler().post(new Runnable() {
                 @Override
@@ -58,7 +61,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
      */
     @Override
     public void onMessage(final Context context, String s) {
-        Log.i(TAG, "onMessage: " + s.toString());
+        L.i("onMessage called: s:" + s);
         if (mPushInterface != null) {
             final Message message = new Message();
             message.setMessageID("");
@@ -75,10 +78,15 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     }
 
+    @Override
+    public void onMessage(Context context, Intent intent) {
+        super.onMessage(context, intent);
+    }
 
     @Override
     public void onUnRegister(final Context context, boolean b) {
         //调用PushManager.unRegister(context）方法后，会在此回调反注册状态
+        L.i("onUnRegister called");
         if (b == true) {
             if (mPushInterface != null) {
                 JHandler.handler().post(new Runnable() {
@@ -101,7 +109,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     @Override
     public void onPushStatus(Context context, PushSwitchStatus pushSwitchStatus) {
         //检查通知栏和透传消息开关状态回调
-        Log.i(TAG, "onPushStatus: " + pushSwitchStatus.toString());
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.jiang.android.pushdemo;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +36,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{android.Manifest.permission.READ_PHONE_STATE},
+//                    100);
+//        }
+
+        //android.permission.WRITE_SETTINGS
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.WRITE_SETTINGS},
+                    1300);
+        }
         register = (AppCompatButton) findViewById(R.id.register);
         register.setOnClickListener(this);
         unregister = (AppCompatButton) findViewById(R.id.unregister);
@@ -94,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register() {
-//        Push.register(this,true,new PushService());
         Push.register(this, true, new PushInterface() {
             @Override
             public void onRegister(Context context, String registerID) {

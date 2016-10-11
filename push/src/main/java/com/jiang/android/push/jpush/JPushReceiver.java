@@ -29,7 +29,7 @@ public class JPushReceiver extends BroadcastReceiver {
     private static PushInterface mPushInterface;
 
     public static void registerInterface(PushInterface pushInterface) {
-            mPushInterface = pushInterface;
+        mPushInterface = pushInterface;
     }
 
     public static PushInterface getPushInterface() {
@@ -109,9 +109,9 @@ public class JPushReceiver extends BroadcastReceiver {
         StringBuilder sb = new StringBuilder();
         for (String key : bundle.keySet()) {
             if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+                sb.append("\nkey:").append(key).append(", value:").append(bundle.getInt(key));
             } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+                sb.append("\nkey:").append(key).append(", value:").append(bundle.getBoolean(key));
             } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
                 if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
                     Log.i(TAG, "This message has no Extra data");
@@ -124,19 +124,20 @@ public class JPushReceiver extends BroadcastReceiver {
 
                     while (it.hasNext()) {
                         String myKey = it.next().toString();
-                        sb.append("\nkey:" + key + ", value: [" +
-                                myKey + " - " + json.optString(myKey) + "]");
+                        sb.append("\nkey:").append(key + ", value: [" +
+                                myKey).append(" - ").append(json.optString(myKey) + "]");
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Get message extra JSON error!");
                 }
 
             } else {
-                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+                sb.append("\nkey:").append(key).append(", value:" + bundle.getString(key));
             }
         }
         return sb.toString();
     }
+
     public static void clearPushInterface() {
         mPushInterface = null;
     }

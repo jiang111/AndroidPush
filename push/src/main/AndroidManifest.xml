@@ -33,16 +33,6 @@
         android:name="${JPUSH_PKGNAME}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
-    <!-- xiaomi -->
-    <permission
-        android:name="${PNAME}.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signature" />
-
-
-    <!--这里com.xiaomi.mipushdemo改成app的包名-->
-    <uses-permission android:name="${PNAME}.permission.MIPUSH_RECEIVE" />
-    <!--这里com.xiaomi.mipushdemo改成app的包名-->
-    <!-- xiaomi end -->
 
 
     <!-- flyme  -->

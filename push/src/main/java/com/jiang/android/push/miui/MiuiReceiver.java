@@ -149,7 +149,7 @@ public class MiuiReceiver extends PushMessageReceiver {
     }
 
     @Override
-    public void onCommandResult(Context context, MiPushCommandMessage message) {
+    public void onCommandResult(final Context context, MiPushCommandMessage message) {
         String command = message.getCommand();
         List<String> arguments = message.getCommandArguments();
         String cmdArg1 = ((arguments != null && arguments.size() > 0) ? arguments.get(0) : null);
@@ -157,51 +157,53 @@ public class MiuiReceiver extends PushMessageReceiver {
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mRegId = cmdArg1;
-            }
-        } else if (MiPushClient.COMMAND_SET_ALIAS.equals(command)) {
-            if (message.getResultCode() == ErrorCode.SUCCESS) {
-                mAlias = cmdArg1;
-            }
-        } else if (MiPushClient.COMMAND_UNSET_ALIAS.equals(command)) {
-            if (message.getResultCode() == ErrorCode.SUCCESS) {
-                mAlias = cmdArg1;
-            }
-        } else if (MiPushClient.COMMAND_SUBSCRIBE_TOPIC.equals(command)) {
-            if (message.getResultCode() == ErrorCode.SUCCESS) {
-                mTopic = cmdArg1;
-            }
-        } else if (MiPushClient.COMMAND_UNSUBSCRIBE_TOPIC.equals(command)) {
-            if (message.getResultCode() == ErrorCode.SUCCESS) {
-                mTopic = cmdArg1;
-            }
-        } else if (MiPushClient.COMMAND_SET_ACCEPT_TIME.equals(command)) {
-            if (message.getResultCode() == ErrorCode.SUCCESS) {
-                mStartTime = cmdArg1;
-                mEndTime = cmdArg2;
+                if (mPushInterface != null) {
+                    JHandler.handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPushInterface.onRegister(context, mRegId);
+                        }
+                    });
+                }
+            } else if (MiPushClient.COMMAND_SET_ALIAS.equals(command)) {
+                if (message.getResultCode() == ErrorCode.SUCCESS) {
+                    mAlias = cmdArg1;
+                    if (mPushInterface != null) {
+                        JHandler.handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPushInterface.onAlias(context, mAlias);
+                            }
+                        });
+                    }
+                }
+            } else if (MiPushClient.COMMAND_UNSET_ALIAS.equals(command)) {
+                if (message.getResultCode() == ErrorCode.SUCCESS) {
+                    mAlias = cmdArg1;
+                }
+            } else if (MiPushClient.COMMAND_SUBSCRIBE_TOPIC.equals(command)) {
+                if (message.getResultCode() == ErrorCode.SUCCESS) {
+                    mTopic = cmdArg1;
+                }
+            } else if (MiPushClient.COMMAND_UNSUBSCRIBE_TOPIC.equals(command)) {
+                if (message.getResultCode() == ErrorCode.SUCCESS) {
+                    mTopic = cmdArg1;
+                }
+            } else if (MiPushClient.COMMAND_SET_ACCEPT_TIME.equals(command)) {
+                if (message.getResultCode() == ErrorCode.SUCCESS) {
+                    mStartTime = cmdArg1;
+                    mEndTime = cmdArg2;
+                }
             }
         }
+
+
+
     }
 
     @Override
-    public void onReceiveRegisterResult(final Context context, MiPushCommandMessage message) {
-        String command = message.getCommand();
-        List<String> arguments = message.getCommandArguments();
-        String cmdArg1 = ((arguments != null && arguments.size() > 0) ? arguments.get(0) : null);
-        String cmdArg2 = ((arguments != null && arguments.size() > 1) ? arguments.get(1) : null);
-        if (MiPushClient.COMMAND_REGISTER.equals(command)) {
-            if (message.getResultCode() == ErrorCode.SUCCESS) {
-                mRegId = cmdArg1;
-            }
-        }
-        if (mPushInterface != null) {
-            JHandler.handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    mPushInterface.onRegister(context, mRegId);
-                }
-            });
-        }
-
+    public void onReceiveRegisterResult(Context context, MiPushCommandMessage miPushCommandMessage) {
+        super.onReceiveRegisterResult(context, miPushCommandMessage);
     }
 
     public static void clearPushInterface() {

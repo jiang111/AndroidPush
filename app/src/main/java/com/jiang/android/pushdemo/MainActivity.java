@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toast("取消注册");
                 break;
             case R.id.open:
-                Push.start(this);
+                Push.resume(this);
                 toast("开启推送");
                 break;
             case R.id.close:
-                Push.stop(this);
+                Push.pause(this);
                 toast("开始暂停");
                 break;
         }
@@ -146,6 +146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onCustomMessage(Context context, Message message) {
 
                 addData(message.toString());
+            }
+
+            @Override
+            public void onAlias(Context context, String alias) {
+                addData("alias: " + alias);
             }
         });
 

@@ -41,4 +41,5 @@ dependencies {
     compile project(':push-internal-3.1.160901')
     compile project(':usage-stats-2.5.1')
     compile project(':push')
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

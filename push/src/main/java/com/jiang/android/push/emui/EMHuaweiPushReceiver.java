@@ -123,6 +123,7 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
         super.onEvent(context, event, extras);
     }
 
+
     public static void clearPushInterface() {
         mPushInterface = null;
     }

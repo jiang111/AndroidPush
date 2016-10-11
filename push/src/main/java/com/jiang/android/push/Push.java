@@ -3,6 +3,7 @@ package com.jiang.android.push;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Process;
+import android.text.TextUtils;
 
 import com.huawei.android.pushagent.api.PushManager;
 import com.jiang.android.push.emui.EMHuaweiPushReceiver;
@@ -17,9 +18,13 @@ import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 /**
  * Created by jiang on 2016/10/8.
@@ -152,8 +157,6 @@ public class Push {
 
 
     /**
-     * 只有当第一次调用才会生效，后续调用不会生效
-     *
      * @param pushInterface
      */
     public static void setPushInterface(PushInterface pushInterface) {
@@ -185,6 +188,51 @@ public class Push {
             }
             return;
         }
+    }
+
+
+    /**
+     * 设置别名，
+     * 华为不支持alias的写法，所以只能用tag，tag只能放map，所以alias作为value,key为name
+     *
+     * @param context
+     * @param alias
+     */
+    public static void setAlias(final Context context, String alias) {
+        if (TextUtils.isEmpty(alias))
+            return;
+        if (RomUtil.rom() == Target.EMUI) {
+            Map<String, String> tag = new HashMap<>();
+            tag.put("name", alias);
+            PushManager.setTags(context, tag);
+            return;
+
+        }
+        if (RomUtil.rom() == Target.MIUI) {
+            MiPushClient.setAlias(context, alias, null);
+
+            return;
+        }
+        if (RomUtil.rom() == Target.FLYME) {
+            com.meizu.cloud.pushsdk.PushManager.subScribeAlias(context, Const.getFlyme_app_id(), Const.getFlyme_app_key(), getToken(context).getToken(), alias);
+            return;
+        }
+
+        if (RomUtil.rom() == Target.JPUSH) {
+            JPushInterface.setAlias(context, alias, new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    if (i == 0) { // 这里极光规定0代表成功
+                        if (JPushReceiver.getPushInterface() != null) {
+                            JPushReceiver.getPushInterface().onAlias(context, s);
+
+                        }
+                    }
+                }
+            });
+            return;
+        }
+
     }
 
     /**
@@ -219,7 +267,7 @@ public class Push {
     /**
      * 停止推送
      */
-    public static void stop(Context context) {
+    public static void pause(Context context) {
         if (context == null)
             return;
         if (RomUtil.rom() == Target.EMUI) {
@@ -262,7 +310,7 @@ public class Push {
     /**
      * 开始推送
      */
-    public static void start(Context context) {
+    public static void resume(Context context) {
         if (context == null)
             return;
         if (RomUtil.rom() == Target.EMUI) {

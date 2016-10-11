@@ -55,4 +55,10 @@ public class PushService implements PushInterface {
         Log.i(TAG, "onCustomMessage: " + message.toString());
 
     }
+
+    @Override
+    public void onAlias(Context context, String alias) {
+        Log.i(TAG, "onAlias: " + alias);
+
+    }
 }

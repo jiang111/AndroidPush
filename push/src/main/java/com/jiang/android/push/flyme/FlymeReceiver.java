@@ -146,8 +146,17 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     }
 
     @Override
-    public void onSubAliasStatus(Context context, SubAliasStatus subAliasStatus) {
-        Log.i(TAG, "onSubAliasStatus " + subAliasStatus);
+    public void onSubAliasStatus(final Context context, final SubAliasStatus subAliasStatus) {
+        Log.i(TAG, "onSubAliasStatus ");
+        if (mPushInterface != null) {
+            JHandler.handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onAlias(context, subAliasStatus.getAlias());
+                }
+            });
+        }
+
         //别名回调
     }
 

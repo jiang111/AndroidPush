@@ -3,9 +3,9 @@ package com.jiang.android.push;
 import android.content.Context;
 
 /**
- * PushInterface 在所有的receiver中只能注册一次
- * 注意: 在flyme的推送中，只会回调 onCustomMessage()方法
- * 在华为推送中，不会回调onMessage() 方法
+ * warning:
+ * 在flyme的推送中,不会回调onMessage()和onMessageClicked()方法
+ * 在华为推送中，不会回调onMessage()和onAlias()方法
  * Created by jiang on 2016/10/8.
  */
 
@@ -65,4 +65,11 @@ public interface PushInterface {
     void onCustomMessage(Context context, Message message);
 
 
+    /**
+     * 别名设置成功的回调
+     *
+     * @param context
+     * @param alias
+     */
+    void onAlias(Context context, String alias);
 }

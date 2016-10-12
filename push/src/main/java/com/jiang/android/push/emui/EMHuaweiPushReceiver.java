@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.huawei.android.pushagent.api.PushEventReceiver;
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
+import com.jiang.android.push.utils.JHandler;
 import com.jiang.android.push.utils.JsonUtils;
 import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.Target;
@@ -36,29 +37,40 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
 
 
     @Override
-    public void onToken(Context context, String token, Bundle extras) {
+    public void onToken(final Context context, final String token, Bundle extras) {
         String belongId = extras.getString("belongId");
         String content = "获取token和belongId成功，token = " + token + ",belongId = " + belongId;
         L.i(content);
         mToken = token;
         if (mPushInterface != null) {
-            mPushInterface.onRegister(context, token);
+            JHandler.handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mPushInterface.onRegister(context, token);
+                }
+            });
         }
     }
 
 
     @Override
-    public boolean onPushMsg(Context context, byte[] msg, Bundle bundle) {
+    public boolean onPushMsg(final Context context, byte[] msg, Bundle bundle) {
         //这里是透传消息， msg是透传消息的字节数组 bundle字段没用
+        L.i("onPushMsg: " + new String(msg));
         try {
             String content = new String(msg, "UTF-8");
             if (mPushInterface != null) {
-                Message message = new Message();
+                final Message message = new Message();
                 message.setMessage(content);
                 //华为的sdk在透传的时候无法实现extra字段，这里要注意
                 message.setExtra("{}");
                 message.setTarget(Target.EMUI);
-                mPushInterface.onCustomMessage(context, message);
+                JHandler.handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPushInterface.onCustomMessage(context, message);
+                    }
+                });
             }
             L.i(content);
         } catch (Exception e) {
@@ -79,7 +91,9 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
      * @param event
      * @param extras
      */
-    public void onEvent(Context context, Event event, Bundle extras) {
+    public void onEvent(final Context context, Event event, Bundle extras) {
+        L.i("onEvent: ");
+        // super.onEvent(context, event, extras);
         if (Event.NOTIFICATION_OPENED.equals(event) || Event.NOTIFICATION_CLICK_BTN.equals(event)) {
             int notifyId = extras.getInt(BOUND_KEY.pushNotifyId, 0);
             if (0 != notifyId) {
@@ -90,13 +104,18 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
             L.i(content);
             try {
                 if (mPushInterface != null) {
-                    Message message = new Message();
+                    final Message message = new Message();
                     message.setTitle("暂无");
                     message.setNotifyID(notifyId);
                     message.setMessage(content);
                     message.setExtra(JsonUtils.getJson(extras));
                     message.setTarget(Target.EMUI);
-                    mPushInterface.onMessageClicked(context, message);
+                    JHandler.handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPushInterface.onMessageClicked(context, message);
+                        }
+                    });
                 }
             } catch (Exception e) {
                 e.printStackTrace();

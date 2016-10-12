@@ -14,8 +14,8 @@ public class L {
     public static final boolean debug = BuildConfig.DEBUG;
 
     public static void i(String msg) {
-        if (debug) {
-            Log.i(TAG, msg);
-        }
+        //if (debug) {
+        Log.i(TAG, msg);
+        //}
     }
 }

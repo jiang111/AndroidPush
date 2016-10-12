@@ -31,6 +31,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
 
     List<String> mDatas = new ArrayList<>();
+    PushInterface pushInterface = new PushInterface() {
+        @Override
+        public void onRegister(Context context, String registerID) {
+            addData("onRegister id:" + registerID);
+        }
+
+        @Override
+        public void onUnRegister(Context context) {
+            addData("onUnRegister");
+        }
+
+        @Override
+        public void onPaused(Context context) {
+            addData("onPaused");
+        }
+
+        @Override
+        public void onResume(Context context) {
+            addData("onResume");
+        }
+
+        @Override
+        public void onMessage(Context context, Message message) {
+
+            addData(message.toString());
+        }
+
+        @Override
+        public void onMessageClicked(Context context, Message message) {
+
+            addData("MessageClicked: " + message.toString());
+        }
+
+        @Override
+        public void onCustomMessage(Context context, Message message) {
+
+            addData(message.toString());
+        }
+
+        @Override
+        public void onAlias(Context context, String alias) {
+            addData("alias: " + alias);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,56 +153,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register() {
-        Push.register(this, true, new PushInterface() {
-            @Override
-            public void onRegister(Context context, String registerID) {
-                addData("onRegister id:" + registerID);
-            }
-
-            @Override
-            public void onUnRegister(Context context) {
-                addData("onUnRegister");
-            }
-
-            @Override
-            public void onPaused(Context context) {
-                addData("onPaused");
-            }
-
-            @Override
-            public void onResume(Context context) {
-                addData("onResume");
-            }
-
-            @Override
-            public void onMessage(Context context, Message message) {
-
-                addData(message.toString());
-            }
-
-            @Override
-            public void onMessageClicked(Context context, Message message) {
-
-                addData("MessageClicked: " + message.toString());
-            }
-
-            @Override
-            public void onCustomMessage(Context context, Message message) {
-
-                addData(message.toString());
-            }
-
-            @Override
-            public void onAlias(Context context, String alias) {
-                addData("alias: " + alias);
-            }
-        });
+        Push.register(this, true, pushInterface);
 
     }
 
     private void addData(String value) {
         mDatas.add(value);
-        recyclerView.getAdapter().notifyItemInserted(mDatas.size() - 1);
+        recyclerView.getAdapter().notifyDataSetChanged();
 
     }
 }

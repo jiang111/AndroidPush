@@ -15,5 +15,6 @@ public class App extends Application {
         super.onCreate();
         Const.setMiUI_APP("123345", "9efbdsfsdfdsfa717495bbae156ee5b66978b");
         Const.setFlyme_APP("110029", "9efb4973a717495bbae156ee5b66978b");
+
     }
 }

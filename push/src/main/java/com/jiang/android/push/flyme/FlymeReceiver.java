@@ -27,12 +27,13 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     private static final String TAG = "FlymeReceiver";
 
-    private static PushInterface mPushInterface;
+    private static PushInterface mPushInterface = null;
 
     public static void registerInterface(PushInterface pushInterface) {
 
         mPushInterface = pushInterface;
     }
+
 
     public static PushInterface getPushInterface() {
         return mPushInterface;
@@ -50,6 +51,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
                 }
             });
+        } else {
+            L.i("callback is null");
         }
     }
 
@@ -74,6 +77,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
                 }
             });
+        } else {
+            L.i("callback is null");
         }
 
     }
@@ -81,6 +86,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
     @Override
     public void onMessage(Context context, Intent intent) {
         super.onMessage(context, intent);
+        Log.i(TAG, "onMessage: ");
     }
 
     @Override
@@ -96,6 +102,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
                     }
                 });
+            } else {
+                L.i("callback is null");
             }
         }
     }
@@ -122,6 +130,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
                     mPushInterface.onRegister(context, registerStatus.getPushId());
                 }
             });
+        } else {
+            L.i("callback is null");
         }
     }
 
@@ -136,6 +146,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
                     mPushInterface.onUnRegister(context);
                 }
             });
+        } else {
+            L.i("callback is null");
         }
     }
 
@@ -155,6 +167,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
                     mPushInterface.onAlias(context, subAliasStatus.getAlias());
                 }
             });
+        } else {
+            L.i("callback is null");
         }
 
         //别名回调

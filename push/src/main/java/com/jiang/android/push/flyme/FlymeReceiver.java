@@ -48,8 +48,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
                 }
             });
-        } else {
-            L.i("callback is null");
         }
     }
 
@@ -77,8 +75,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
                 }
             });
-        } else {
-            L.i("callback is null");
         }
     }
 
@@ -100,8 +96,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
                     }
                 });
-            } else {
-                L.i("callback is null");
             }
         }
     }
@@ -127,8 +121,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
                     mPushInterface.onRegister(context, registerStatus.getPushId());
                 }
             });
-        } else {
-            L.i("callback is null");
         }
     }
 
@@ -143,8 +135,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
                     mPushInterface.onUnRegister(context);
                 }
             });
-        } else {
-            L.i("callback is null");
         }
     }
 
@@ -161,12 +151,9 @@ public class FlymeReceiver extends MzPushMessageReceiver {
             JHandler.handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    L.i("sadasdaddd");
                     mPushInterface.onAlias(context, subAliasStatus.getAlias());
                 }
             });
-        } else {
-            L.i("callback is null");
         }
 
         //别名回调

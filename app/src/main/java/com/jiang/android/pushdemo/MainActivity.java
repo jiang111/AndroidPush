@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alias.setOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
+        Push.setPushInterface(pushInterface);
+
         mDatas.add("--------- log ----------");
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         BaseAdapter adapter = new BaseAdapter() {
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register() {
-        Push.register(this, true, pushInterface);
+        Push.register(this, true);
 
     }
 

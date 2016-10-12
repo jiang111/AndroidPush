@@ -224,6 +224,7 @@ public class Push {
                 public void gotResult(int i, String s, Set<String> set) {
                     if (i == 0) { // 这里极光规定0代表成功
                         if (JPushReceiver.getPushInterface() != null) {
+                            L.i("JPushInterface.setAlias");
                             JPushReceiver.getPushInterface().onAlias(context, s);
 
                         }

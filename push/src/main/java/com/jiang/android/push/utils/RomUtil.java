@@ -1,9 +1,6 @@
 package com.jiang.android.push.utils;
 
-import android.os.Build;
-
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 
 /**
@@ -16,6 +13,11 @@ public class RomUtil {
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
     private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
+    private static final String KEY_FLYME_ID_FALG_KEY = "ro.build.display.id";
+    private static final String KEY_FLYME_ID_FALG_VALUE_KEYWORD = "Flyme";
+    private static final String KEY_FLYME_ICON_FALG = "persist.sys.use.flyme.icon";
+    private static final String KEY_FLYME_SETUP_FALG = "ro.meizu.setupwizard.flyme";
+    private static final String KEY_FLYME_PUBLISH_FALG = "ro.flyme.published";
 
 
     /**
@@ -57,9 +59,15 @@ public class RomUtil {
      */
     private static boolean isFlyme() {
         try {
-            final Method method = Build.class.getMethod("hasSmartBar");
-            return method != null;
-        } catch (final Exception e) {
+            final BuildProperties prop = BuildProperties.newInstance();
+            /*String rom = "" + prop.getProperty(KEY_MIUI_VERSION_CODE, null) + prop.getProperty(KEY_MIUI_VERSION_NAME, null)+prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null);
+            Log"Android_Rom", rom);*/
+            return prop.getProperty(KEY_FLYME_ID_FALG_KEY, null) != null
+                    || prop.getProperty(KEY_FLYME_ID_FALG_VALUE_KEYWORD, null) != null
+                    || prop.getProperty(KEY_FLYME_ICON_FALG, null) != null
+                    || prop.getProperty(KEY_FLYME_SETUP_FALG, null) != null
+                    || prop.getProperty(KEY_FLYME_PUBLISH_FALG, null) != null;
+        } catch (final IOException e) {
             return false;
         }
     }

@@ -2,7 +2,6 @@ package com.jiang.android.push.flyme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
@@ -24,8 +23,6 @@ import com.meizu.cloud.pushsdk.platform.message.UnRegisterStatus;
  */
 
 public class FlymeReceiver extends MzPushMessageReceiver {
-
-    private static final String TAG = "FlymeReceiver";
 
     private static PushInterface mPushInterface = null;
 
@@ -63,7 +60,7 @@ public class FlymeReceiver extends MzPushMessageReceiver {
      * @param s
      */
     @Override
-    public void onMessage(final Context context, String s) {
+    public void onMessage(final Context context, final String s) {
         L.i("onMessage called: s:" + s);
         if (mPushInterface != null) {
             final Message message = new Message();
@@ -73,20 +70,21 @@ public class FlymeReceiver extends MzPushMessageReceiver {
             JHandler.handler().post(new Runnable() {
                 @Override
                 public void run() {
+
+
                     mPushInterface.onCustomMessage(context, message);
+
 
                 }
             });
         } else {
             L.i("callback is null");
         }
-
     }
 
     @Override
     public void onMessage(Context context, Intent intent) {
         super.onMessage(context, intent);
-        Log.i(TAG, "onMessage: ");
     }
 
     @Override
@@ -121,7 +119,6 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     @Override
     public void onRegisterStatus(final Context context, final RegisterStatus registerStatus) {
-        Log.i(TAG, "onRegisterStatus " + registerStatus);
         //新版订阅回调
         if (mPushInterface != null) {
             JHandler.handler().post(new Runnable() {
@@ -137,8 +134,8 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     @Override
     public void onUnRegisterStatus(final Context context, UnRegisterStatus unRegisterStatus) {
-        Log.i(TAG, "onUnRegisterStatus " + unRegisterStatus);
         //新版反订阅回调
+        L.i("onUnRegisterStatus");
         if (mPushInterface != null) {
             JHandler.handler().post(new Runnable() {
                 @Override
@@ -153,17 +150,18 @@ public class FlymeReceiver extends MzPushMessageReceiver {
 
     @Override
     public void onSubTagsStatus(Context context, SubTagsStatus subTagsStatus) {
-        Log.i(TAG, "onSubTagsStatus " + subTagsStatus);
         //标签回调
+        L.i("onSubTagsStatus");
     }
 
     @Override
     public void onSubAliasStatus(final Context context, final SubAliasStatus subAliasStatus) {
-        Log.i(TAG, "onSubAliasStatus ");
+        L.i("onSubAliasStatus");
         if (mPushInterface != null) {
             JHandler.handler().post(new Runnable() {
                 @Override
                 public void run() {
+                    L.i("sadasdaddd");
                     mPushInterface.onAlias(context, subAliasStatus.getAlias());
                 }
             });

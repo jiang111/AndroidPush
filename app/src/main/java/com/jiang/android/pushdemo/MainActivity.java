@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addData("alias: " + alias);
         }
     };
+    private AppCompatButton alias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         open = (AppCompatButton) findViewById(R.id.open);
         open.setOnClickListener(this);
         close = (AppCompatButton) findViewById(R.id.close);
+        alias = (AppCompatButton) findViewById(R.id.alias);
         close.setOnClickListener(this);
+        alias.setOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
         mDatas.add("--------- log ----------");
@@ -143,6 +146,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.close:
                 Push.pause(this);
                 toast("开始暂停");
+                break;
+            case R.id.alias:
+                Push.setAlias(this, "haha");
+                toast("alias");
                 break;
         }
 

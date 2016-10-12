@@ -42,6 +42,13 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/close"
         android:layout_height="wrap_content" />
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:text="Alias"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/alias"
+        android:layout_height="wrap_content" />
     
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

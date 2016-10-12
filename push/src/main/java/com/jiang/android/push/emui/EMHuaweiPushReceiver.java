@@ -54,9 +54,6 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
             String content = new String(msg, "UTF-8");
             if (mPushInterface != null) {
                 Message message = new Message();
-                //TODO... 暂时不知道messageID怎么获取
-                message.setMessageID("");
-                message.setTitle("暂无");
                 message.setMessage(content);
                 //华为的sdk在透传的时候无法实现extra字段，这里要注意
                 message.setExtra("{}");
@@ -96,8 +93,6 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
                     Message message = new Message();
                     message.setTitle("暂无");
                     message.setNotifyID(notifyId);
-                    //TODO... 暂时不知道messageID怎么获取
-                    message.setMessageID("");
                     message.setMessage(content);
                     message.setExtra(JsonUtils.getJson(extras));
                     message.setTarget(Target.EMUI);

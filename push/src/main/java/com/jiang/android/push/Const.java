@@ -42,19 +42,30 @@ public class Const {
     }
 
 
-    public static void setMiui_app_id(String miui_app_id) {
+    public static void setMiUI_APP(String miui_app_id, String miui_app_key) {
+        setMiui_app_id(miui_app_id);
+        setMiui_app_key(miui_app_key);
+    }
+
+    public static void setFlyme_APP(String flyme_app_id, String flyme_app_key) {
+        setFlyme_app_id(flyme_app_id);
+        setFlyme_app_key(flyme_app_key);
+    }
+
+
+    private static void setMiui_app_id(String miui_app_id) {
         Const.miui_app_id = miui_app_id;
     }
 
-    public static void setMiui_app_key(String miui_app_key) {
+    private static void setMiui_app_key(String miui_app_key) {
         Const.miui_app_key = miui_app_key;
     }
 
-    public static void setFlyme_app_id(String flyme_app_id) {
+    private static void setFlyme_app_id(String flyme_app_id) {
         Const.flyme_app_id = flyme_app_id;
     }
 
-    public static void setFlyme_app_key(String flyme_app_key) {
+    private static void setFlyme_app_key(String flyme_app_key) {
         Const.flyme_app_key = flyme_app_key;
     }
 }

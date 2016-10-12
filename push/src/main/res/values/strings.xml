@@ -1,14 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Push</string>
-    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
-    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
-    <string name="style_hint">style为数字</string>
-    <string name="error_style_empty">style不能为空</string>
-    <string name="error_alias_empty">alias不能为空</string>
-    <string name="error_tag_empty">tag不能为空</string>
-    <string name="error_tag_gs_empty">格式不对</string>
-    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
-    <string name="logining">程序在后台执行, 请查看日志！</string>
-    <string name="setting_su">设置成功</string>
 
+    <string name="app_name">PushDemo</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    
+    <string name="name">姓名:</string>
+    <string name="age">年龄:</string>
+    <string name="pinlv">位置信息上报周期(min):</string> 
+    <string name="setTag">设置标签</string>
+    <string name="delTag">删除标签</string>
+    <string name="location">位置上报</string>
+    <string name="setInterval">设置周期(秒)</string>
+    <string name="openLBS">开启位置定时上报</string>
+    <string name="closeLBS">关闭位置定时上报</string>
+    
+    
+    <string name="tag1">标签1：</string>
+    <string name="tag2">标签2：</string>
+    <string name="tag_key">请输入标签名(空则不设置)</string>
+    <string name="tag_value">请输入标签值</string>
+    <string name="tag_delete_key">请输入待删标签名</string>
+    
+    <string name="getTag">获取标签</string>
+    
 </resources>

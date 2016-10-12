@@ -4,11 +4,10 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.huawei.android.pushagent.api.PushEventReceiver;
+import com.huawei.android.pushagent.PushReceiver;
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
 import com.jiang.android.push.utils.JHandler;
-import com.jiang.android.push.utils.JsonUtils;
 import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.Target;
 
@@ -16,7 +15,7 @@ import com.jiang.android.push.utils.Target;
  * Created by jiang on 2016/10/8.
  */
 
-public class EMHuaweiPushReceiver extends PushEventReceiver {
+public class EMHuaweiPushReceiver extends PushReceiver {
 
     private static String mToken = null;
 
@@ -50,6 +49,12 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
                 }
             });
         }
+    }
+
+    @Override
+    public void onPushMsg(Context context, byte[] bytes, String s) {
+        super.onPushMsg(context, bytes, s);
+        L.i("onPushMsg...");
     }
 
 
@@ -93,7 +98,6 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
      */
     public void onEvent(final Context context, Event event, Bundle extras) {
         L.i("onEvent: ");
-        // super.onEvent(context, event, extras);
         if (Event.NOTIFICATION_OPENED.equals(event) || Event.NOTIFICATION_CLICK_BTN.equals(event)) {
             int notifyId = extras.getInt(BOUND_KEY.pushNotifyId, 0);
             if (0 != notifyId) {
@@ -102,24 +106,24 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
             }
             String content = "收到通知附加消息： " + extras.getString(BOUND_KEY.pushMsgKey);
             L.i(content);
-            try {
-                if (mPushInterface != null) {
-                    final Message message = new Message();
-                    message.setTitle("暂无");
-                    message.setNotifyID(notifyId);
-                    message.setMessage(content);
-                    message.setExtra(JsonUtils.getJson(extras));
-                    message.setTarget(Target.EMUI);
-                    JHandler.handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mPushInterface.onMessageClicked(context, message);
-                        }
-                    });
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                if (mPushInterface != null) {
+//                    final Message message = new Message();
+//                    message.setTitle("暂无");
+//                    message.setNotifyID(notifyId);
+//                    message.setMessage(content);
+//                    message.setExtra(JsonUtils.getJson(extras));
+//                    message.setTarget(Target.EMUI);
+//                    JHandler.handler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mPushInterface.onMessageClicked(context, message);
+//                        }
+//                    });
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         } else if (Event.PLUGINRSP.equals(event)) {
             final int TYPE_LBS = 1;
             final int TYPE_TAG = 2;
@@ -133,8 +137,8 @@ public class EMHuaweiPushReceiver extends PushEventReceiver {
             }
             L.i(message + isSuccess);
             //   showPushMessage(PustDemoActivity.RECEIVE_TAG_LBS_MSG, message + isSuccess);
+            super.onEvent(context, event, extras);
         }
-        super.onEvent(context, event, extras);
     }
 
 

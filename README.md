@@ -1,11 +1,14 @@
 # AndroidPush
 [![](https://jitpack.io/v/jiang111/AndroidPush.svg)](https://jitpack.io/#jiang111/AndroidPush)
 
+### 各个平台的说明
+>1. MIUI系统将使用[小米推送](http://dev.xiaomi.com/doc/?page_id=1670)
+>2. Flyme系统将使用[魅族推送](https://open.flyme.cn/open-web/views/push.html?t=1476262864945)
+>3. EMUI系统将使用[华为推送](http://developer.huawei.com/push)
+>4. 其他系统将使用[JPush推送](https://www.jiguang.cn)
 
-### 使用(详细使用请看app下的demo)
->1. 调用Push的register()方法即可。在调用该方法之前，请确保已经设置了Const类中小米和魅族的app_key和app_id然后，代码会判断当前手机的类型，如果是小米则启动小米推送，华为则启用华为推送，flyme则启用flyme推送，其他情况下启用极光推送
->2. 实现PushInterface接口，然后根据各个回调方法做相关的任务
->3. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
+### 集成(请看app下的demo)
+>1. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
 ```
    allprojects {
    		repositories {
@@ -30,7 +33,7 @@
     }
 ```
 
->4. 在自己项目下的manifest文件中添加如下代码:
+>2. 在自己项目下的manifest文件中添加如下代码:
 ```
  <!-- manifest节点下 -->
  <permission
@@ -133,14 +136,35 @@
 
 ```
 
+### 使用
+>1. 在使用推送之前,请在gradle中配置JPUSH_APPKEY字段为jpush平台的key,在小米和魅族开放平台申请的id和key进行配置,小米和魅族的配置方法:
+```
+Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
+Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
+```
 
-### 各个推送的特殊情况说明 （个人理解）
->1. 小米和极光推送做的都很不错，没什么可说的
+>2. 创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。
+```
+Push.setPushInterface(pushInterface);
+```
 
->2. 华为推送
-如果推送的消息类型为透传消息的话，则无法使用extra字段，只可以用onPushMsg()回调中的 byte[] msg 参数。
-通知栏的话,由于点击动作和魅族一样，都是由后台控制,所以，这里不做操作
+>3. 注册推送服务,这里会根据自己的rom型号自动配置相关的推送服务:
+```
+Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各个推送服务的debug功能.
+```
 
->3. flyme推送
+>4.获取当前rom平台:
+```
+RomUtil.rom();
+```
+
+### 各个推送平台的特点
+>1. 小米和极光推送做的都很不错，没什么可说的.
+
+>2. flyme推送
 无法对通知栏做任何的控制(除了改改样式),一切都由后台控制
-透传消息的话，在Receiver的onMessage()的回调中使用。
+透传消息的话,在Receiver的onMessage()的回调中使用.
+
+>3. 华为推送
+如果推送的消息类型为透传消息的话，则无法使用extra字段,只可以用onPushMsg()回调中的 byte[] msg 参数.
+通知栏的话,由于点击动作和魅族一样，都是由后台控制.

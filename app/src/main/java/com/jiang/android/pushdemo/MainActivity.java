@@ -1,5 +1,6 @@
 package com.jiang.android.pushdemo;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.jiang.android.push.Push;
 import com.jiang.android.push.PushInterface;
 import com.jiang.android.rvadapter.BaseAdapter;
 import com.jiang.android.rvadapter.BaseViewHolder;
+import com.jiang.android.rvadapter.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mDatas.add("--------- log ----------");
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new BaseAdapter() {
+        BaseAdapter adapter = new BaseAdapter() {
             @Override
             protected void onBindView(BaseViewHolder baseViewHolder, int i) {
 
@@ -124,7 +126,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public int getItemCount() {
                 return mDatas.size();
             }
+        };
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int i) {
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(mDatas.get(i));
+                Toast.makeText(MainActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
+            }
         });
+        recyclerView.setAdapter(adapter);
 
     }
 

@@ -14,9 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jiang.android.push.Message;
-import com.jiang.android.push.Push;
-import com.jiang.android.push.PushInterface;
+import com.jiang.android.push.*;
+import com.jiang.android.push.BuildConfig;
 import com.jiang.android.rvadapter.BaseAdapter;
 import com.jiang.android.rvadapter.BaseViewHolder;
 import com.jiang.android.rvadapter.OnItemClickListener;
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register() {
-        Push.register(this, true);
+        Push.register(this, BuildConfig.DEBUG);
 
     }
 

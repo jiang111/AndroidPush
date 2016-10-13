@@ -38,6 +38,18 @@
 >2. 在自己项目下的manifest文件中添加如下代码:
 ```
  <!-- manifest节点下 -->
+     <uses-permission android:name="${JPUSH_PKGNAME}.permission.JPUSH_MESSAGE" />
+     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.WAKE_LOCK" />
+     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.VIBRATE" />
+     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
  <permission
         android:name="${PNAME}.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />

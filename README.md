@@ -50,6 +50,7 @@
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
      <uses-permission android:name="android.permission.WRITE_SETTINGS" />
      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+      <uses-permission android:name="android.permission.GET_TASKS"/>
  <permission
         android:name="${PNAME}.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />

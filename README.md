@@ -12,15 +12,14 @@
 ### 集成(请看app下的demo)
 >1. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
 ```
+   //项目最外层的gradle
    allprojects {
    		repositories {
    			...
    			maven { url "https://jitpack.io" }
    		}
    	}
-   	dependencies {
-   		compile 'com.github.jiang111:AndroidPush:v1.1.0'
-   	}
+   	//app下的gradle
     defaultConfig {
         ...
         ndk {
@@ -33,6 +32,9 @@
                 PNAME : applicationId
         ]
     }
+    dependencies {
+       		compile 'com.github.jiang111:AndroidPush:v1.1.0'
+       	}
 ```
 
 >2. 在自己项目下的manifest文件中添加如下代码:

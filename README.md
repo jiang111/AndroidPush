@@ -19,7 +19,7 @@
    		}
    	}
    	dependencies {
-   		compile 'com.github.User:Repo:Tag'
+   		compile 'com.github.jiang111:AndroidPush:v1.1.0'
    	}
     defaultConfig {
         ...

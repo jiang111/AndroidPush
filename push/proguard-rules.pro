@@ -17,15 +17,18 @@
 #}
 
 -keep public class * extends android.content.BroadcastReceiver
-#这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名
--keep class com.jiang.android.push.* {*;}
+-keep class com.xiaomi.mipush.sdk.DemoMessageReceiver {*;}
+#可以防止一个误报的 warning 导致无法成功编译，如果编译使用的 Android 版本是 23。
+-dontwarn com.xiaomi.push.**
+# library
+-keep class com.jiang.android.push.**{*;}
 
 
 # huawei
--keep class com.huawei.android.pushagent.**{*;}
--keep class com.huawei.android. pushselfshow.**{*;}
--keep class com.huawei.android. microkernel.**{*;}
+-keep class com.huawei.**{*;}
+-keep class com.hianalytics.android.**{*;}
 -keep class com.baidu.mapapi.**{*;}
+-dontwarn com.huawei.**
 
 # jpush
 -dontoptimize

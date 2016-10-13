@@ -172,6 +172,9 @@ Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各
 RomUtil.rom();
 ```
 
+### 混淆
+在library中已经配置混淆,不需要再配置
+
 ### 各个推送平台的特点
 >1. 小米和极光推送做的都差不多，通知栏和透传消息都可以自己控制，没什么可说的.
 

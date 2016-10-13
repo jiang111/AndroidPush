@@ -24,7 +24,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+
+            //混淆
+            minifyEnabled true
+            //优化zipAlign
+            zipAlignEnabled true
+            //移除无用的resource
+            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -41,5 +48,4 @@ dependencies {
     compile project(':push-internal-3.1.160901')
     compile project(':usage-stats-2.5.1')
     compile project(':push')
-    compile 'org.greenrobot:eventbus:3.0.0'
 }

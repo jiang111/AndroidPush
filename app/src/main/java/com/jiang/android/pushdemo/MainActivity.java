@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.jiang.android.push.*;
 import com.jiang.android.push.BuildConfig;
+import com.jiang.android.push.utils.RomUtil;
 import com.jiang.android.rvadapter.BaseAdapter;
 import com.jiang.android.rvadapter.BaseViewHolder;
 import com.jiang.android.rvadapter.OnItemClickListener;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PushInterface pushInterface = new PushInterface() {
         @Override
         public void onRegister(Context context, String registerID) {
-            addData("onRegister id:" + registerID);
+            addData("onRegister id:" + registerID+"; target: "+ RomUtil.rom().toString());
         }
 
         @Override

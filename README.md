@@ -1,7 +1,7 @@
 # AndroidPush
 [![](https://jitpack.io/v/jiang111/AndroidPush.svg)](https://jitpack.io/#jiang111/AndroidPush) <br />
 
-更方便的将各个rom厂商自己的推送服务进行集成,并统一管理 
+更方便的将各个rom厂商自己的推送服务进行集成,并统一管理,使用前还是需要熟悉各个平台的开发文档
 
 ### 各个平台的说明
 >1. MIUI系统将使用[小米推送](http://dev.xiaomi.com/doc/?page_id=1670)

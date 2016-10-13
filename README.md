@@ -187,6 +187,5 @@ RomUtil.rom();
 ### 混淆
 在library中已经配置混淆,不需要再配置
 
-
 ### 常见rom的区分
 参考自: http://www.jianshu.com/p/6e6828755667

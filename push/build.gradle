@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.1.1"
         ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
 

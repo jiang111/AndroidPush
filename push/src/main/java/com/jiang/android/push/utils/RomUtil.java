@@ -15,10 +15,8 @@ public class RomUtil {
     private static final String KEY_MIUI_HANDY_MODE_SF = "ro.miui.has_handy_mode_sf";
     private static final String KEY_MIUI_REAL_BLUR = "ro.miui.has_real_blur";
 
-    private static final String KEY_FLYME_BUILD_USER = "ro.build.user";
     private static final String KEY_FLYME_ICON = "persist.sys.use.flyme.icon";
     private static final String KEY_FLYME_PUBLISHED = "ro.flyme.published";
-    private static final String KEY_FLYME_DISPLAY_ID = "ro.build.display.id";
     private static final String KEY_FLYME_FLYME = "ro.meizu.setupwizard.flyme";
 
 
@@ -64,10 +62,8 @@ public class RomUtil {
     private static boolean isFlyme() {
         try {
             final BuildProperties prop = BuildProperties.newInstance();
-            return prop.containsKey(KEY_FLYME_BUILD_USER)
-                    || prop.containsKey(KEY_FLYME_ICON)
+            return prop.containsKey(KEY_FLYME_ICON)
                     || prop.containsKey(KEY_FLYME_PUBLISHED)
-                    || prop.containsKey(KEY_FLYME_DISPLAY_ID)
                     || prop.containsKey(KEY_FLYME_FLYME);
         } catch (final IOException e) {
             return false;

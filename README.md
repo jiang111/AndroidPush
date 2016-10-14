@@ -33,7 +33,7 @@
         ]
     }
     dependencies {
-       		compile 'com.github.jiang111:AndroidPush:v1.1.0'
+       		compile 'com.github.jiang111:AndroidPush:v1.1.1'
        	}
 ```
 

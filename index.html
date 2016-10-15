@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Androidpush : 更方便的将各个rom厂商自己的推送服务进行集成,并统一管理">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Androidpush</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/jiang111/AndroidPush">View on GitHub</a>
+
+          <h1 id="project_title">Androidpush</h1>
+          <h2 id="project_tagline">更方便的将各个rom厂商自己的推送服务进行集成,并统一管理</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/jiang111/AndroidPush/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jiang111/AndroidPush/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="androidpush" class="anchor" href="#androidpush" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AndroidPush</h1>
+
+<p><a href="https://jitpack.io/#jiang111/AndroidPush"><img src="https://jitpack.io/v/jiang111/AndroidPush.svg" alt=""></a> <br></p>
+
+<p>更方便的将各个rom厂商自己的推送服务进行集成,并统一管理,使用前还是需要熟悉各个平台的相关文档</p>
+
+<h3>
+<a id="各个平台的说明" class="anchor" href="#%E5%90%84%E4%B8%AA%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>各个平台的说明</h3>
+
+<blockquote>
+<ol>
+<li>MIUI系统将使用<a href="http://dev.xiaomi.com/doc/?page_id=1670">小米推送</a>
+</li>
+<li>Flyme系统将使用<a href="https://open.flyme.cn/open-web/views/push.html?t=1476262864945">魅族推送</a>
+</li>
+<li>EMUI系统将使用<a href="http://developer.huawei.com/push">华为推送</a>
+</li>
+<li>其他系统将使用<a href="https://www.jiguang.cn">JPush推送</a>
+</li>
+</ol>
+</blockquote>
+
+<h3>
+<a id="集成请看app下的demo" class="anchor" href="#%E9%9B%86%E6%88%90%E8%AF%B7%E7%9C%8Bapp%E4%B8%8B%E7%9A%84demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>集成(请看app下的demo)</h3>
+
+<blockquote>
+<ol>
+<li>将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加</li>
+</ol>
+
+<pre><code>   //项目最外层的gradle
+   allprojects {
+        repositories {
+            ...
+            maven { url "https://jitpack.io" }
+        }
+    }
+    //app下的gradle
+    defaultConfig {
+        ...
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "3df7e06ec9bf5e79abdc4a6a",
+                JPUSH_CHANNEL : "develop",
+                PNAME : applicationId
+        ]
+    }
+    dependencies {
+            compile 'com.github.jiang111:AndroidPush:v1.1.1'
+        }
+</code></pre>
+
+<ol>
+<li>在自己项目下的manifest文件中添加如下代码:</li>
+</ol>
+
+<pre><code> &lt;!-- manifest节点下 --&gt;
+     &lt;uses-permission android:name="${JPUSH_PKGNAME}.permission.JPUSH_MESSAGE" /&gt;
+     &lt;uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" /&gt;
+     &lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+     &lt;uses-permission android:name="android.permission.WAKE_LOCK" /&gt;
+     &lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;
+     &lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;
+     &lt;uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /&gt;
+     &lt;uses-permission android:name="android.permission.VIBRATE" /&gt;
+     &lt;uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /&gt;
+     &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
+     &lt;uses-permission android:name="android.permission.WRITE_SETTINGS" /&gt;
+     &lt;uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /&gt;
+      &lt;uses-permission android:name="android.permission.GET_TASKS"/&gt;
+ &lt;permission
+        android:name="${PNAME}.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" /&gt;
+    &lt;uses-permission android:name="${PNAME}.permission.MIPUSH_RECEIVE" /&gt;
+</code></pre>
+</blockquote>
+
+<pre><code> &lt;!-- application节点下 --&gt;
+ &lt;meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="${JPUSH_CHANNEL}"
+            tools:replace="android:value" /&gt;
+        &lt;!-- Required. AppKey copied from Portal --&gt;
+        &lt;meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="${JPUSH_APPKEY}"
+            tools:replace="android:value" /&gt;
+        &lt;receiver
+            android:name="com.jiang.android.push.jpush.JPushReceiver"
+            android:enabled="true"&gt;
+            &lt;intent-filter&gt;
+                &lt;!--Required 用户注册SDK的intent--&gt;
+                &lt;action android:name="cn.jpush.android.intent.REGISTRATION" /&gt;
+                &lt;!--Required 用户接收SDK消息的intent--&gt;
+                &lt;action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /&gt;
+                &lt;!--Required 用户接收SDK通知栏信息的intent--&gt;
+                &lt;action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /&gt;
+                &lt;!--Required 用户打开自定义通知栏的intent--&gt;
+                &lt;action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /&gt;
+                &lt;!--Optional 用户接受Rich Push Javascript 回调函数的intent--&gt;
+                &lt;action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /&gt;
+                &lt;!-- 接收网络变化 连接/断开 since 1.6.3 --&gt;
+                &lt;action android:name="cn.jpush.android.intent.CONNECTION" /&gt;
+                &lt;category android:name="${JPUSH_PKGNAME}" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/receiver&gt;
+        &lt;receiver android:name="com.jiang.android.push.emui.EMHuaweiPushReceiver"&gt;
+            &lt;intent-filter&gt;
+                &lt;!-- 必须,用于接收token--&gt;
+                &lt;action android:name="com.huawei.android.push.intent.REGISTRATION" /&gt;
+                &lt;action android:name="com.huawei.intent.action.PUSH_STATE" /&gt; &lt;!-- 可选，标签、地理位置上报回应，不上报则不需要 --&gt;
+                &lt;action android:name="com.huawei.android.push.plugin.RESPONSE" /&gt;
+            &lt;/intent-filter&gt;
+            &lt;meta-data
+                android:name="CS_cloud_ablitity"
+                android:value="@string/hwpush_ability_value" /&gt;
+        &lt;/receiver&gt;
+        &lt;receiver
+            android:name="com.jiang.android.push.miui.MiuiReceiver"
+            android:exported="true"&gt;
+            &lt;!--这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名--&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" /&gt;
+            &lt;/intent-filter&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" /&gt;
+            &lt;/intent-filter&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="com.xiaomi.mipush.ERROR" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/receiver&gt;
+        &lt;!-- push应用定义消息receiver声明 --&gt;
+        &lt;receiver android:name="com.jiang.android.push.flyme.FlymeReceiver"&gt;
+            &lt;intent-filter&gt;
+                &lt;!-- 接收push消息 --&gt;
+                &lt;action android:name="com.meizu.flyme.push.intent.MESSAGE" /&gt;
+                &lt;!-- 接收register消息 --&gt;
+                &lt;action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" /&gt;
+                &lt;!-- 接收unregister消息--&gt;
+                &lt;action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" /&gt;
+                &lt;!-- 兼容低版本Flyme3推送服务配置 --&gt;
+                &lt;action android:name="com.meizu.c2dm.intent.REGISTRATION" /&gt;
+                &lt;action android:name="com.meizu.c2dm.intent.RECEIVE" /&gt;
+                &lt;category android:name="${PNAME}"&gt;&lt;/category&gt;
+            &lt;/intent-filter&gt;
+        &lt;/receiver&gt;
+        &lt;activity
+            android:name="com.huawei.android.pushselfshow.richpush.RichPushActivity"
+            android:configChanges="orientation|screenSize|locale|layoutDirection"
+            android:process=":pushservice"
+            android:screenOrientation="portrait"
+            android:theme="@style/hwpush_NoActionBar"&gt;
+            &lt;meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui" /&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="com.huawei.android.push.intent.RICHPUSH" /&gt;
+                &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+        &lt;activity
+            android:name="com.huawei.android.pushselfshow.permission.RequestPermissionsActivity"
+            android:configChanges="orientation|screenSize|locale|layoutDirection"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar"&gt;&lt;/activity&gt;
+
+</code></pre>
+
+<h3>
+<a id="使用" class="anchor" href="#%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用</h3>
+
+<blockquote>
+<ol>
+<li>在使用推送之前,请在gradle中配置JPUSH_APPKEY字段为jpush平台的key,在小米和魅族开放平台申请的id和key进行配置,小米和魅族的配置方法:</li>
+</ol>
+
+<pre><code>Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
+Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
+</code></pre>
+
+<ol>
+<li>创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。</li>
+</ol>
+
+<pre><code>Push.setPushInterface(pushInterface);
+</code></pre>
+
+<ol>
+<li>注册推送服务,这里会根据自己的rom型号自动配置相关的推送服务:</li>
+</ol>
+
+<pre><code>Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各个推送服务的debug功能.
+</code></pre>
+
+<p>4.获取当前rom平台:</p>
+
+<pre><code>RomUtil.rom();
+</code></pre>
+</blockquote>
+
+<h3>
+<a id="各个推送平台的特点" class="anchor" href="#%E5%90%84%E4%B8%AA%E6%8E%A8%E9%80%81%E5%B9%B3%E5%8F%B0%E7%9A%84%E7%89%B9%E7%82%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>各个推送平台的特点</h3>
+
+<blockquote>
+<ol>
+<li><p>小米和极光推送做的都差不多，通知栏和透传消息都可以自己控制，没什么可说的.</p></li>
+<li><p>flyme推送
+无法对通知栏做任何的控制(除了改改样式),一切都由后台控制
+透传消息的话,在Receiver的onMessage()的回调中使用.</p></li>
+<li><p>华为推送
+如果推送的消息类型为透传消息的话，则无法使用extra字段,只可以用onPushMsg()回调中的 byte[] msg 参数.
+通知栏的话,由于点击动作和魅族一样，都是由后台控制.</p></li>
+</ol>
+</blockquote>
+
+<h3>
+<a id="混淆" class="anchor" href="#%E6%B7%B7%E6%B7%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>混淆</h3>
+
+<p>在library中已经配置混淆,不需要再配置</p>
+
+<h3>
+<a id="常见rom的区分" class="anchor" href="#%E5%B8%B8%E8%A7%81rom%E7%9A%84%E5%8C%BA%E5%88%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>常见rom的区分</h3>
+
+<p>参考自: <a href="http://www.jianshu.com/p/6e6828755667">http://www.jianshu.com/p/6e6828755667</a></p>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h3>
+
+<pre><code>Copyright 2016 NewTab
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Androidpush maintained by <a href="https://github.com/jiang111">jiang111</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

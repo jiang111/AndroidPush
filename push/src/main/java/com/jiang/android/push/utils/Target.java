@@ -5,5 +5,5 @@ package com.jiang.android.push.utils;
  */
 
 public enum Target {
-    MIUI, EMUI, FLYME, JPUSH
+    MIUI, EMUI, FLYME, JPUSH ,MyRoom
 }

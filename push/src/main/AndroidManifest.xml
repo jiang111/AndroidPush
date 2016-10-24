@@ -208,6 +208,31 @@
         <!-- xiaomi  end -->
 
 
+
+        <!-- my service-->
+
+        <service android:name=".myservice.Service1" android:process=":process1"/>
+        <receiver android:name=".myservice.Receiver1" android:process=":process1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED">
+                </action>
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+
+            <intent-filter >
+                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED"/>
+                <data android:scheme="file">
+                </data>
+            </intent-filter>
+
+        </receiver>
+        <service android:name=".myservice.Service2" android:process=":process2"/>
+        <receiver android:name=".myservice.Receiver2" android:process=":process2"/>
+
+        <!-- ! my service-->
+
+
     </application>
 
 

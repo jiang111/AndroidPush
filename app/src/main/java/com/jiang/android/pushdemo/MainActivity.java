@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (RomUtil.rom() == Target.MyRoom) {
             websocketService = new Intent(this, Service1.class);
             startService(websocketService);
-            Service1.openConnect();
+//            Service1.openConnect();
         } else {
             Push.setPushInterface(pushInterface);
         }

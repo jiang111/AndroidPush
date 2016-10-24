@@ -3,12 +3,13 @@ package com.jiang.android.pushdemo;
 import android.app.Application;
 
 import com.jiang.android.push.Const;
+import com.jiang.android.push.application.MyApplication;
 
 /**
  * Created by jiang on 2016/10/8.
  */
 
-public class App extends Application {
+public class App extends MyApplication {
 
     @Override
     public void onCreate() {

@@ -17,12 +17,12 @@ public class MyApplication extends DaemonApplication {
     @Override
     protected DaemonConfigurations getDaemonConfigurations() {
         DaemonConfigurations.DaemonConfiguration configuration1 = new DaemonConfigurations.DaemonConfiguration(
-                "com.jiang.android.push:process1",
+                "com.jiang.android.pushdemo:process1",
                 Service1.class.getCanonicalName(),
                 Receiver1.class.getCanonicalName());
 
         DaemonConfigurations.DaemonConfiguration configuration2 = new DaemonConfigurations.DaemonConfiguration(
-                "com.jiang.android.push:process2",
+                "com.jiang.android.pushdemo:process2",
                 Service2.class.getCanonicalName(),
                 Receiver2.class.getCanonicalName());
 

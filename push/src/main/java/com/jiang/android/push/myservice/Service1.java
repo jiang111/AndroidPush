@@ -10,11 +10,6 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
@@ -36,13 +31,13 @@ public class Service1 extends Service {
     public void onCreate() {
         super.onCreate();
         //TODO do some thing what you want..
-
+        connect();
 
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        connect();
+
         return super.onStartCommand(intent, flags, startId);
     }
 

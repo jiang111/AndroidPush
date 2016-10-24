@@ -2,6 +2,7 @@ package com.jiang.android.pushdemo;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 
 import com.jiang.android.push.*;
 import com.jiang.android.push.BuildConfig;
+import com.jiang.android.push.myservice.Service1;
 import com.jiang.android.push.utils.RomUtil;
+import com.jiang.android.push.utils.Target;
 import com.jiang.android.rvadapter.BaseAdapter;
 import com.jiang.android.rvadapter.BaseViewHolder;
 import com.jiang.android.rvadapter.OnItemClickListener;
@@ -32,11 +35,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton close;
     private RecyclerView recyclerView;
 
+    private Intent websocketService;
+
     List<String> mDatas = new ArrayList<>();
     PushInterface pushInterface = new PushInterface() {
         @Override
         public void onRegister(Context context, String registerID) {
-            addData("onRegister id:" + registerID+"; target: "+ RomUtil.rom().toString());
+            addData("onRegister id:" + registerID + "; target: " + RomUtil.rom().toString());
         }
 
         @Override
@@ -107,7 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alias.setOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
-        Push.setPushInterface(pushInterface);
+        if (RomUtil.rom() == Target.MyRoom) {
+            websocketService = new Intent(this, Service1.class);
+            startService(websocketService);
+            Service1.openConnect();
+        } else {
+            Push.setPushInterface(pushInterface);
+        }
 
         mDatas.add("--------- log ----------");
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -182,5 +193,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDatas.add(value);
         recyclerView.getAdapter().notifyDataSetChanged();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (websocketService != null) {
+            Service1.closeConnect();
+            stopService(websocketService);
+        }
+        super.onDestroy();
     }
 }

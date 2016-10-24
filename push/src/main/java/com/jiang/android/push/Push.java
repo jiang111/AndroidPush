@@ -105,6 +105,10 @@ public class Push {
             JPushInterface.setDebugMode(debug);
             return;
         }
+        
+        if(RomUtil.rom() == Target.MyRoom){
+            // TODO: 2016/10/24  
+        }
 
 
 

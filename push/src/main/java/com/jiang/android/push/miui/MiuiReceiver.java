@@ -7,6 +7,7 @@ import android.util.Log;
 import com.jiang.android.push.Message;
 import com.jiang.android.push.PushInterface;
 import com.jiang.android.push.utils.JHandler;
+import com.jiang.android.push.utils.JsonUtils;
 import com.jiang.android.push.utils.L;
 import com.jiang.android.push.utils.Target;
 import com.xiaomi.mipush.sdk.ErrorCode;
@@ -105,8 +106,8 @@ public class MiuiReceiver extends PushMessageReceiver {
             result.setMessage(mMessage);
             result.setTarget(Target.MIUI);
             try {
-//                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
-                result.setExtra(message.getContent());
+                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
+//                result.setExtra(message.getContent());
             } catch (Exception e) {
                 Log.e(TAG, "onNotificationMessageClicked: " + e.toString());
                 result.setExtra("{}");
@@ -138,8 +139,8 @@ public class MiuiReceiver extends PushMessageReceiver {
             result.setMessage(message.getDescription());
             result.setTarget(Target.MIUI);
             try {
-//                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
-                result.setExtra(message.getContent());
+                result.setExtra(JsonUtils.setJson(message.getExtra()).toString());
+//                result.setExtra(message.getContent());
             } catch (Exception e) {
                 L.i("onReceivePassThroughMessage: " + e.toString());
                 result.setExtra("{}");

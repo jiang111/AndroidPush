@@ -7,7 +7,6 @@
         android:minSdkVersion="9"
         android:targetSdkVersion="23" />
 
-
     <uses-permission android:name="${JPUSH_PKGNAME}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,20 +19,18 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- xiaomi -->
     <permission
         android:name="${PNAME}.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
 
-
-    <!--这里com.xiaomi.mipushdemo改成app的包名-->
+    <!-- 这里com.xiaomi.mipushdemo改成app的包名 -->
     <uses-permission android:name="${PNAME}.permission.MIPUSH_RECEIVE" />
-    <!--这里com.xiaomi.mipushdemo改成app的包名-->
+
+    <!-- 这里com.xiaomi.mipushdemo改成app的包名 -->
     <!-- xiaomi end -->
-
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -41,7 +38,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,6 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="${JPUSH_CHANNEL}"
@@ -63,42 +60,45 @@
             android:name="com.jiang.android.push.jpush.JPushReceiver"
             android:enabled="true">
             <intent-filter>
-                <!--Required 用户注册SDK的intent-->
+
+                <!-- Required 用户注册SDK的intent -->
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!--Required 用户接收SDK消息的intent-->
+                <!-- Required 用户接收SDK消息的intent -->
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!--Required 用户接收SDK通知栏信息的intent-->
+                <!-- Required 用户接收SDK通知栏信息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!--Required 用户打开自定义通知栏的intent-->
+                <!-- Required 用户打开自定义通知栏的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
+
                 <category android:name="${JPUSH_PKGNAME}" />
             </intent-filter>
         </receiver>
-
         <receiver android:name="com.jiang.android.push.emui.EMHuaweiPushReceiver">
             <intent-filter>
-                <!-- 必须,用于接收token-->
+
+                <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
-                <!-- 必须，用于接收消息-->
+                <!-- 必须，用于接收消息 -->
                 <action android:name="com.huawei.android.push.intent.RECEIVE" />
-                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调-->
-                <action android:name="com.huawei.android.push.intent.CLICK" /> <!-- 可选，查看push通道是否连接，不查看则不需要-->
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" /> <!-- 可选，查看push通道是否连接，不查看则不需要 -->
                 <action android:name="com.huawei.intent.action.PUSH_STATE" /> <!-- 可选，标签、地理位置上报回应，不上报则不需要 -->
                 <action android:name="com.huawei.android.push.plugin.RESPONSE" />
             </intent-filter>
+
             <meta-data
                 android:name="CS_cloud_ablitity"
                 android:value="@string/hwpush_ability_value" />
-
         </receiver>
         <receiver
             android:name="com.jiang.android.push.miui.MiuiReceiver"
             android:exported="true">
-            <!--这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名-->
+
+            <!-- 这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名 -->
             <intent-filter>
                 <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
             </intent-filter>
@@ -113,17 +113,18 @@
         <!-- push应用定义消息receiver声明 -->
         <receiver android:name="com.jiang.android.push.flyme.FlymeReceiver">
             <intent-filter>
+
                 <!-- 接收push消息 -->
                 <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
                 <!-- 接收register消息 -->
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <!-- 接收unregister消息-->
+                <!-- 接收unregister消息 -->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
                 <!-- 兼容低版本Flyme3推送服务配置 -->
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />
 
-                <category android:name="${PNAME}"></category>
+                <category android:name="${PNAME}" />
             </intent-filter>
         </receiver>
 
@@ -136,8 +137,10 @@
             <meta-data
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui" />
+
             <intent-filter>
                 <action android:name="com.huawei.android.push.intent.RICHPUSH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -147,10 +150,20 @@
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar"></activity>
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar" />
+        <activity android:name=".LauncherActivity">
+            <intent-filter>
 
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="sdfdsfdsfsdf"
+                    android:path="/notify"
+                    android:scheme="custom" />
+            </intent-filter>
+
+        </activity>
     </application>
-
 
 </manifest>

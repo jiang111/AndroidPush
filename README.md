@@ -1,5 +1,3 @@
-# AndroidPush
-[![](https://jitpack.io/v/jiang111/AndroidPush.svg)](https://jitpack.io/#jiang111/AndroidPush) <br />
 
 更方便的将各个rom厂商自己的推送服务进行集成,并统一管理,使用前还是需要熟悉各个平台的相关文档
 
@@ -12,13 +10,6 @@
 ### 集成(请看app下的demo)
 >1. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
 ```
-   //项目最外层的gradle
-   allprojects {
-   		repositories {
-   			...
-   			maven { url "https://jitpack.io" }
-   		}
-   	}
    	//app下的gradle
     defaultConfig {
         ...
@@ -32,9 +23,7 @@
                 PNAME : applicationId
         ]
     }
-    dependencies {
-       		compile 'com.github.jiang111:AndroidPush:v1.1.1'
-       	}
+   
 ```
 
 >2. 在自己项目下的manifest文件中添加如下代码:
@@ -57,6 +46,25 @@
         android:name="${PNAME}.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
     <uses-permission android:name="${PNAME}.permission.MIPUSH_RECEIVE" />
+    
+<!--huawei -->
+<uses-permission android:name="com.huawei.pushagent.permission.RICHMEDIA_PROVIDER" />
+<permission
+android:name="${JPUSH_PKGNAME}.permission.JPUSH_MESSAGE"
+android:protectionLevel="signature" />
+<!-- flyme -->
+<uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE"></uses-permission>
+<permission
+android:name="${PNAME}.push.permission.MESSAGE"
+android:protectionLevel="signature" />
+<uses-permission android:name="${PNAME}.push.permission.MESSAGE"></uses-permission>
+<!-- 兼容flyme3.0配置权限-->
+<uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+<permission
+android:name="${PNAME}.permission.C2D_MESSAGE"
+android:protectionLevel="signature"></permission>
+<uses-permission android:name="${PNAME}.permission.C2D_MESSAGE" />
+<!-- flyme end -->
 ```
 
 ```
@@ -71,7 +79,7 @@
             android:value="${JPUSH_APPKEY}"
             tools:replace="android:value" />
         <receiver
-            android:name="com.jiang.android.push.jpush.JPushReceiver"
+            android:name="package.JPushReceiver"
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->
@@ -89,7 +97,7 @@
                 <category android:name="${JPUSH_PKGNAME}" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.jiang.android.push.emui.EMHuaweiPushReceiver">
+        <receiver android:name="package.EMHuaweiPushReceiver">
             <intent-filter>
                 <!-- 必须,用于接收token-->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
@@ -101,7 +109,7 @@
                 android:value="@string/hwpush_ability_value" />
         </receiver>
         <receiver
-            android:name="com.jiang.android.push.miui.MiuiReceiver"
+            android:name="package.MiuiReceiver"
             android:exported="true">
             <!--这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名-->
             <intent-filter>
@@ -115,7 +123,7 @@
             </intent-filter>
         </receiver>
         <!-- push应用定义消息receiver声明 -->
-        <receiver android:name="com.jiang.android.push.flyme.FlymeReceiver">
+        <receiver android:name="package.FlymeReceiver">
             <intent-filter>
                 <!-- 接收push消息 -->
                 <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
@@ -150,6 +158,160 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar"></activity>
+            
+<!-- jpush -->
+<!-- Required SDK 核心功能-->
+<!-- option since 2.0.5 可配置PushService，DaemonService,PushReceiver,AlarmReceiver的android:process参数 将JPush相关组件设置为一个独立进程 -->
+<!-- 如：android:process=":remote" -->
+<service
+android:name="cn.jpush.android.service.PushService"
+android:enabled="true"
+android:exported="false">
+<intent-filter>
+<action android:name="cn.jpush.android.intent.REGISTER" />
+<action android:name="cn.jpush.android.intent.REPORT" />
+<action android:name="cn.jpush.android.intent.PushService" />
+<action android:name="cn.jpush.android.intent.PUSH_TIME" />
+</intent-filter>
+</service>
+<!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+<!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+<service
+android:name="cn.jpush.android.service.DaemonService"
+android:enabled="true"
+android:exported="true">
+<intent-filter>
+<action android:name="cn.jpush.android.intent.DaemonService" />
+<category android:name="${JPUSH_PKGNAME}" />
+</intent-filter>
+</service>
+<!-- Required -->
+<receiver
+android:name="cn.jpush.android.service.PushReceiver"
+android:enabled="true">
+<intent-filter android:priority="1000">
+<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+<category android:name="${JPUSH_PKGNAME}" />
+</intent-filter>
+<intent-filter>
+<action android:name="android.intent.action.USER_PRESENT" />
+<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+</intent-filter>
+<!-- Optional -->
+<intent-filter>
+<action android:name="android.intent.action.PACKAGE_ADDED" />
+<action android:name="android.intent.action.PACKAGE_REMOVED" />
+<data android:scheme="package" />
+</intent-filter>
+</receiver>
+<!-- Required SDK核心功能-->
+<activity
+android:name="cn.jpush.android.ui.PushActivity"
+android:configChanges="orientation|keyboardHidden"
+android:exported="false">
+<intent-filter>
+<action android:name="cn.jpush.android.ui.PushActivity" />
+<category android:name="android.intent.category.DEFAULT" />
+<category android:name="${JPUSH_PKGNAME}" />
+</intent-filter>
+</activity>
+<!-- Required SDK核心功能-->
+<service
+android:name="cn.jpush.android.service.DownloadService"
+android:enabled="true"
+android:exported="false"></service>
+<!-- Required SDK核心功能-->
+<receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+<!-- User defined. 用户自定义的广播接收器-->
+<!-- Required. For publish channel feature -->
+<!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。-->
+<!-- 例如: -->
+<!-- 发到 Google Play 的APK可以设置为 google-play; -->
+<!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
+<!-- 目前这个渠道统计功能的报表还未开放。-->
+<meta-data
+android:name="JPUSH_CHANNEL"
+android:value="${JPUSH_CHANNEL}" />
+<!-- Required. AppKey copied from Portal -->
+<meta-data
+android:name="JPUSH_APPKEY"
+android:value="${JPUSH_APPKEY}" />
+<!-- jpush end -->
+<!-- huawei -->
+<!-- 第三方相关 :接收Push消息(注册、Push消息、Push连接状态、标签，LBS上报 结果)广播 -->
+<!-- 备注:Push相关的android组件需要添加到业务的AndroidManifest.xml,
+Push相关android组件运行在另外一个进程是为了防止Push服务异常而影响主业务
+PushSDK:PushSDK接收外部请求事件入口 -->
+<receiver
+android:name="com.huawei.android.pushagent.PushEventReceiver"
+android:process=":pushservice">
+<intent-filter>
+<action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL" />
+/>
+<action android:name="com.huawei.intent.action.PUSH" />
+<action android:name="com.huawei.intent.action.PUSH_ON" />
+<action android:name="com.huawei.android.push.PLUGIN" />
+</intent-filter>
+<intent-filter>
+<action android:name="android.intent.action.PACKAGE_ADDED" />
+<action android:name="android.intent.action.PACKAGE_REMOVED" />
+<data android:scheme="package" />
+</intent-filter>
+</receiver>
+<receiver
+android:name="com.huawei.android.pushagent.PushBootReceiver"
+android:process=":pushservice">
+<intent-filter>
+<action android:name="com.huawei.android.push.intent.REGISTER" />
+<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+</intent-filter>
+<meta-data
+android:name="CS_cloud_version"
+android:value="\u0032\u0037\u0030\u0034" />
+</receiver>
+<!-- PushSDK:Push服务 -->
+<service
+android:name="com.huawei.android.pushagent.PushService"
+android:process=":pushservice"></service>
+<!-- PushSDK:富媒体呈现页面，用于呈现服务器下发的富媒体消息 --> <!-- locale|layoutDirection 切换语言后不重新创建activity -->
+<!-- huawei end -->
+<!-- xiaomi -->
+<service
+android:name="com.xiaomi.push.service.XMPushService"
+android:enabled="true"
+android:process=":pushservice" />
+<service
+android:name="com.xiaomi.push.service.XMJobService"
+android:enabled="true"
+android:exported="false"
+android:permission="android.permission.BIND_JOB_SERVICE"
+android:process=":pushservice" />
+<!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
+<service
+android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+android:enabled="true"
+android:exported="true" />
+<service
+android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+android:enabled="true" />
+<!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
+<receiver
+android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+android:exported="true">
+<intent-filter>
+<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+<category android:name="android.intent.category.DEFAULT" />
+</intent-filter>
+</receiver>
+<receiver
+android:name="com.xiaomi.push.service.receivers.PingReceiver"
+android:exported="false"
+android:process=":pushservice">
+<intent-filter>
+<action android:name="com.xiaomi.push.PING_TIMER" />
+</intent-filter>
+</receiver>
+<!-- xiaomi end -->
 
 ```
 
@@ -188,6 +350,8 @@ RomUtil.rom();
 
 ### 混淆
 在library中已经配置混淆,不需要再配置
+
+## 注意千万不要直接将库引用到自己的项目，而是要将代码拷贝到项目里
 
 ### 常见rom的区分
 参考自: http://www.jianshu.com/p/6e6828755667

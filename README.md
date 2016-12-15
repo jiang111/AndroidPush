@@ -14,7 +14,7 @@
 >4. 其他系统将使用[JPush推送](https://www.jiguang.cn)
 
 ### 集成(请看app下的demo)
->1. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
+* 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
 ```
   //app下的gradle
     defaultConfig {
@@ -30,29 +30,29 @@
     }
 ```
 
->2. 在自己项目下的manifest文件中添加的代码请参考项目中的demo和push库中的相关文件
+* 在自己项目下的manifest文件中添加的代码请参考项目中的demo和push库中的相关文件
 ```
 code...
 ```
 
 ### 使用
-1. 在使用推送之前,请在gradle中配置JPUSH_APPKEY字段为jpush平台的key,在小米和魅族开放平台申请的id和key进行配置,小米和魅族的配置方法:
+* 在使用推送之前,请在gradle中配置JPUSH_APPKEY字段为jpush平台的key,在小米和魅族开放平台申请的id和key进行配置,小米和魅族的配置方法:
 ```
 Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
 Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
 ```
 
-2. 创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。
+* 创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。
 ```
 Push.setPushInterface(pushInterface);
 ```
 
-3. 注册推送服务,这里会根据自己的rom型号自动配置相关的推送服务:
+* 注册推送服务,这里会根据自己的rom型号自动配置相关的推送服务:
 ```
 Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各个推送服务的debug功能.
 ```
 
-4.获取当前rom平台:
+* 获取当前rom平台:
 ```
 RomUtil.rom();
 ```

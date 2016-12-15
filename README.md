@@ -16,9 +16,8 @@
 ### 集成(请看app下的demo)
 >1. 将项目中的aar文件夹的四个包导入到自己的项目并添加依赖，在自己项目下的gradle文件添加
 ```
-   	//app下的gradle
+  //app下的gradle
     defaultConfig {
-        ...
         ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
         }
@@ -29,7 +28,6 @@
                 PNAME : applicationId
         ]
     }
-   
 ```
 
 >2. 在自己项目下的manifest文件中添加的代码请参考项目中的demo和push库中的相关文件
@@ -43,14 +41,17 @@ code...
 Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
 Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
 ```
+
 2. 创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。
 ```
 Push.setPushInterface(pushInterface);
 ```
+
 3. 注册推送服务,这里会根据自己的rom型号自动配置相关的推送服务:
 ```
 Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各个推送服务的debug功能.
 ```
+
 4.获取当前rom平台:
 ```
 RomUtil.rom();

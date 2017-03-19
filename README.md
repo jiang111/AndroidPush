@@ -75,6 +75,12 @@ RomUtil.rom();
 参考自: http://www.jianshu.com/p/6e6828755667
 
 
+
+### 捐赠
+如果您觉得本项目对您有帮助，欢迎请作者一杯咖啡 <br /><br />
+![](https://raw.githubusercontent.com/jiang111/RxJavaApp/master/qrcode/wechat_alipay.png)
+
+
 ### License
 
     Copyright 2016 NewTab

@@ -42,10 +42,7 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.squareup.okhttp:okhttp:2.1.0'
-    provided project(':common-1.0.10')
-    provided project(':gslb-3.0.9')
-    provided project(':push-internal-3.1.160901')
-    provided project(':usage-stats-2.5.1')
+    compile'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
     /**
      *     jpush
      */

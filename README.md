@@ -19,7 +19,7 @@
 *  魅族SDK   compile 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
 *  JPushSDK compile 'cn.jiguang:jpush:2.1.8'
 
->2. 在app模块下新建包，包名为push(也可以叫其他名字),然后把如下代码全部拷贝进push包里[点我查看代码]https://raw.githubusercontent.com/jiang111/AndroidPush/master/code.zip)
+>2. 在app模块下新建包，包名为push(也可以叫其他名字),然后把如下代码全部拷贝进push包里 [点我查看代码]https://raw.githubusercontent.com/jiang111/AndroidPush/master/code.zip)
 
 >3. 配置APP下的Manifest.xml文件 [注意:如出现推送不成功请仔细检查manifest里对该平台的继承是否正确！！！]
 ```

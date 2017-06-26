@@ -314,6 +314,12 @@ RomUtil.rom();
 ### 常见rom的区分
 参考自: http://www.jianshu.com/p/6e6828755667
 
+### 其他不错的库
+>* android开发不得不收集的小知识点 https://github.com/jiang111/awesome-android-tips
+>* 仿iOS下载按钮 https://github.com/jiang111/CProgressButton
+>* 可指定任意位置的指向性对话框 https://github.com/jiang111/IndicatorDialog
+>* 通过RecyclerView实现的联系人 https://github.com/jiang111/IndexRecyclerView
+>* 学习RxJava操作符的APP https://github.com/jiang111/RxJavaApp
 
 ### 捐赠
 如果您觉得本项目对您有帮助，欢迎请作者一杯咖啡 <br /><br />

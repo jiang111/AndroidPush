@@ -1,7 +1,6 @@
 
 更方便的将各个rom厂商自己的推送服务进行集成,并统一管理,使用前还是需要熟悉各个平台的相关文档
 
-## 注意千万不要直接将库引用到自己的项目，而是要将代码拷贝到项目里，如果推送不成功，请仔细查看官网的说明文档
 
 ### 各个平台的说明
 >1. MIUI系统将使用[小米推送](http://dev.xiaomi.com/doc/?page_id=1670) 
@@ -301,6 +300,12 @@ Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各
 RomUtil.rom();
 ```
 
+
+### 混淆
+请参考 https://github.com/jiang111/AndroidPush/blob/master/push/proguard-rules.pro
+
+## 不要直接将库引用到自己的项目，而是要将代码拷贝到项目里，如果推送不成功，请仔细查看官网的说明文档
+
 ### 各个推送平台的特点
 1. 小米和极光推送做的都差不多，通知栏和透传消息都可以自己控制，没什么可说的.
 2. flyme推送
@@ -310,11 +315,6 @@ RomUtil.rom();
 3. 华为推送
 如果推送的消息类型为透传消息的话，则无法使用extra字段,只可以用onPushMsg()回调中的 byte[] msg 参数.
 通知栏的话,由于点击动作和魅族一样，都是由后台控制.
-
-### 混淆
-请参考 https://github.com/jiang111/AndroidPush/blob/master/push/proguard-rules.pro
-
-## 注意千万不要直接将库引用到自己的项目，而是要将代码拷贝到项目里
 
 ### 常见rom的区分
 参考自: http://www.jianshu.com/p/6e6828755667

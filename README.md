@@ -21,7 +21,7 @@
 
 >2. 在app模块下新建包，包名为push(也可以叫其他名字),然后把如下代码全部拷贝进push包里 [点我查看代码]https://raw.githubusercontent.com/jiang111/AndroidPush/master/code.zip)
 
->3. 配置APP下的Manifest.xml文件 [注意:如出现推送不成功请仔细检查manifest里对该平台的继承是否正确！！！]
+>3. 配置APP下的Manifest.xml文件 [注意:如出现推送不成功请仔细检查manifest里对该平台集成是否正确！！！]
 ```
 //权限通用配置
  <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -66,7 +66,7 @@
 <!-- Required -->
 <uses-permission android:name="${PNAME}.permission.JPUSH_MESSAGE" />
 
-//下面的 receiver 需要加载 application 节点下面
+//下面的配置需要复制到 application 节点下面
 //小米
 <service
   android:enabled="true"
@@ -104,7 +104,7 @@
 </receiver>
 <receiver
   android:exported="true"
-  android:name="${PNAME}.push.miui.MiuiReceiver">
+  android:name=".push.miui.MiuiReceiver">
   <!--这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名-->
   <intent-filter>
     <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
@@ -118,7 +118,7 @@
 </receiver>
 //魅族
 <!--push应用定义消息receiver声明-->
-<receiver android:name="${PNAME}.push.flyme.FlymeReceiver">
+<receiver android:name=".push.flyme.FlymeReceiver">
     <intent-filter>
         <!--接收push消息-->
         <action android:name="com.meizu.flyme.push.intent.MESSAGE"/>
@@ -133,7 +133,7 @@
     </intent-filter>
 </receiver>
 //华为
-<receiver android:name="${PNAME}.push.emui.EMHuaweiPushReceiver" >  
+<receiver android:name=".push.emui.EMHuaweiPushReceiver" >  
 	<intent-filter>  
 	    <action android:name="com.huawei.android.push.intent.REGISTRATION" />   
 	    <action android:name="com.huawei.android.push.intent.RECEIVE" />   
@@ -224,7 +224,7 @@
 <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 <!-- User defined. 用户自定义的广播接收器-->
  <receiver
-     android:name="${PNAME}.push.jpush.JPushReceiver"
+     android:name=".push.jpush.JPushReceiver"
      android:enabled="true">
      <intent-filter>
        <!--Required 用户注册SDK的intent-->

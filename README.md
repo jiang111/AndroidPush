@@ -12,12 +12,12 @@
 
 >4. 其他系统将使用[JPush推送](https://www.jiguang.cn)
 
-### 集成(请看app下的demo)
->1. 将如下4个SDK继承到项目中
-* 华为SDK    请自行去[官网](http://developer.huawei.com/push)下载(推荐)或者[点击这里](https://raw.githubusercontent.com/jiang111/AndroidPush/master/push/libs/HwPush_SDK_V2705.jar)
-* 小米SDK    请自行去[官网](http://dev.xiaomi.com/doc/?page_id=1670)下载(推荐)或者[点击这里](https://raw.githubusercontent.com/jiang111/AndroidPush/master/push/libs/MiPush_SDK_Client_3_1_2.jar)
-* 魅族SDK     compile 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
-* JPush SDK    compile 'cn.jiguang:jpush:2.1.8'
+### 集成
+>1. 将如下4个SDK集成到项目中
+*  华为SDK   请自行去[官网](http://developer.huawei.com/push)下载(推荐)或者[点击这里](https://raw.githubusercontent.com/jiang111/AndroidPush/master/push/libs/HwPush_SDK_V2705.jar)
+*  小米SDK   请自行去[官网](http://dev.xiaomi.com/doc/?page_id=1670)下载(推荐)或者[点击这里](https://raw.githubusercontent.com/jiang111/AndroidPush/master/push/libs/MiPush_SDK_Client_3_1_2.jar)
+*  魅族SDK   compile 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
+*  JPushSDK compile 'cn.jiguang:jpush:2.1.8'
 
 >2. 在app模块下新建包，包名为push(也可以叫其他名字),然后把如下代码全部拷贝进push包里[点我查看代码](https://github.com/jiang111/AndroidPush/tree/master/push/src/main/java/com/jiang/android/push)
 

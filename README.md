@@ -254,7 +254,9 @@
 
 >4. 在app下的gradle文件加上如下这几句话
 ```
-  //app下的gradle
+//app下的gradle  
+android {
+    ...
     defaultConfig {
         ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
@@ -265,6 +267,7 @@
                 PNAME : applicationId
         ]
     }
+}
 ```
 至此，集成已经全部搞定。
 

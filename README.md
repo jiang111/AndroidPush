@@ -127,7 +127,7 @@
         <!--兼容低版本Flyme3推送服务配置-->
         <action android:name="com.meizu.c2dm.intent.REGISTRATION"/>
         <action android:name="com.meizu.c2dm.intent.RECEIVE"/>
-        <category android:name="包名"></category>
+        <category android:name="${PNAME}"></category>
     </intent-filter>
 </receiver>
 //华为
@@ -235,7 +235,7 @@
        <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> 
        <!-- 接收网络变化 连接/断开 since 1.6.3 -->
        <action android:name="cn.jpush.android.intent.CONNECTION" />
-       <category android:name="{PNAME}" />
+       <category android:name="${PNAME}" />
      </intent-filter>
  </receiver>
 <!-- Required. For publish channel feature -->

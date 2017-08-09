@@ -273,20 +273,50 @@ android {
 至此，集成已经全部搞定。
 
 ### 使用
+
+
+* 在Application的onCreate()中初始化:
+
+```
+@Override
+    public void onCreate() {
+        super.onCreate();
+	    //设置小米和魅族的推送id和key
+        Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
+        Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
+	    //初始化推送
+        Push.register(this, BuildConfig.ISDEBUG, new PushInterfaceImpl(this));
+}
+```
+
+* 新建PushInterfaceImpl类，或者任意名字，实现 PushInterface接口,此后收到的推送信息都会在该类的相关方法中回调，注意线程。并且看一下PushInterface类的注释
+
+```
+public class PushInterfaceImpl implements  PushInterface {
+...
+}
+
+```
+目前为止，推送已经集成了，可以去各平台测试。
+
+
+* -------------------------分步介绍-----------------------------
+
+
 * 在使用推送之前,请在gradle中配置JPUSH_APPKEY字段为jpush平台的key,华为不需要配置key,他会在注册的时候自动生成key,在小米和魅族开放平台申请的id和key进行配置,小米和魅族的配置方法:
 ```
 Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
 Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
 ```
 
-* 创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。
-```
-Push.setPushInterface(pushInterface);
-```
-
 * 注册推送服务,这里会根据自己的rom型号自动配置相关的推送服务:
 ```
 Push.register(this, BuildConfig.DEBUG); //BuildConfig.DEBUG代表是否开启各个推送服务的debug功能.
+```
+
+* 创建PushInterface接口的子类,并在相关的方法里实现自己的业务逻辑,并在Push类中进行配置。
+```
+Push.setPushInterface(pushInterface);
 ```
 
 * 获取当前rom平台:

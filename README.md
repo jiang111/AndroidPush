@@ -324,6 +324,13 @@ Push.setPushInterface(pushInterface);
 RomUtil.rom();
 ```
 
+* 其他操作
+```
+Push.unregister(getApplicationContext()); //取消注册
+Push.resume(getApplicationContext());   //开启推送
+Push.pause(getApplicationContext());   //暂停推送
+Push.setAlias(getApplicationContext(), "ALIAS"); //设置别名
+```
 
 ### 混淆
 请参考 https://github.com/jiang111/AndroidPush/blob/master/push/proguard-rules.pro

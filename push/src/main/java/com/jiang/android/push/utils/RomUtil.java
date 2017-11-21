@@ -10,6 +10,7 @@ import java.io.IOException;
 public class RomUtil {
     private static Target mTarget = null;
     private static final String KEY_EMUI_VERSION_CODE = "ro.build.version.emui";
+    private static final String KEY_EMUI_API_LEVEL = "ro.build.hw_emui_api_level";
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
     private static final String KEY_MIUI_HANDY_MODE_SF = "ro.miui.has_handy_mode_sf";
@@ -28,7 +29,7 @@ public class RomUtil {
     private static boolean isEMUI() {
         try {
             final BuildProperties prop = BuildProperties.newInstance();
-            return prop.containsKey(KEY_EMUI_VERSION_CODE);
+            return prop.containsKey(KEY_EMUI_VERSION_CODE) || prop.containsKey(KEY_EMUI_API_LEVEL);
         } catch (final IOException e) {
             return false;
         }

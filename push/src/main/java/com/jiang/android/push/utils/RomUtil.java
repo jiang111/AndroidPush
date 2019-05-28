@@ -165,7 +165,14 @@ public class RomUtil {
             mTarget = Target.MIUI;
             return mTarget;
         }
-
+        if (isVivo()) {
+            mTarget = Target.VIVO;
+            return mTarget;
+        }
+        if (isOppo()) {
+            mTarget = Target.OPPO;
+            return mTarget;
+        }
         mTarget = Target.JPUSH;
         return mTarget;
     }

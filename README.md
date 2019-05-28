@@ -13,8 +13,8 @@
 >1. MIUI系统将使用[小米推送](http://dev.xiaomi.com/doc/?page_id=1670) 
 >2. Flyme系统将使用[魅族推送](https://open.flyme.cn/open-web/views/push.html?t=1476262864945)
 >3. EMUI系统将使用[华为推送](http://developer.huawei.com/push)
->4. 其他系统将使用[OPPO推送](https://push.oppo.com)
->5. 其他系统将使用[VIVO推送](https://dev.vivo.com.cn)
+>4. OPPO系统将使用[OPPO推送](https://push.oppo.com)
+>5. VIVO系统将使用[VIVO推送](https://dev.vivo.com.cn)
 >6. 其他系统将使用[JPush推送](https://www.jiguang.cn)
 
 

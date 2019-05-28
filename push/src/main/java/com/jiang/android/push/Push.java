@@ -7,6 +7,7 @@ import com.jiang.android.push.emui.EMPushManager;
 import com.jiang.android.push.jpush.JPushManager;
 import com.jiang.android.push.miui.MiuiPushManager;
 import com.jiang.android.push.model.TokenModel;
+import com.jiang.android.push.oppo.OppoPushManager;
 import com.jiang.android.push.utils.RomUtil;
 import com.jiang.android.push.utils.Target;
 import com.jiang.android.push.vivo.ViVOPushManager;
@@ -68,6 +69,9 @@ public class Push {
         if (RomUtil.rom() == Target.VIVO) {
             pushManager = new ViVOPushManager();
 
+        }
+        if (RomUtil.rom() == Target.OPPO) {
+            pushManager = new OppoPushManager();
         }
 
 

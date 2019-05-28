@@ -23,8 +23,9 @@
     <permission
         android:name="${PNAME}.permission.C2D_MESSAGE"
         android:protectionLevel="signature"></permission>
-    <uses-permission android:name="${PNAME}.permission.C2D_MESSAGE" />
 
+    <uses-permission android:name="${PNAME}.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
 
     <!-- flyme end  -->
 
@@ -223,13 +224,17 @@
             android:name="com.vivo.push.app_id"
             android:value="xxxx" />
         <!-- push 应用定义消息 receiver 声明 -->
-         <receiver android:name=".vivo.PushMessageReceiverImpl" >
-         <intent-filter>
-         <!-- 接收 push 消息 -->
-         <action android:name="com.vivo.pushclient.action.RECEIVE" />
-         </intent-filter>
-         </receiver>
-
+        <receiver android:name=".vivo.PushMessageReceiverImpl">
+            <intent-filter>
+                <!-- 接收 push 消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.coloros.mcssdk.PushService">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
     </application>
 
 

@@ -70,7 +70,7 @@
     android:protectionLevel="signature" />
 <!-- Required -->
 <uses-permission android:name="${PNAME}.permission.JPUSH_MESSAGE" />
-
+  <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
 //下面的配置需要复制到 application 节点下面
 //小米
 <service
@@ -254,6 +254,37 @@
 <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}"/>
 <!-- Required. AppKey copied from Portal -->
 <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
+
+
+     <!--推送服务需要配置的 service、activity-->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--推送配置项-->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="xxxxxxxx" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="xxxx" />
+        <!-- push 应用定义消息 receiver 声明 -->
+        <receiver android:name=".vivo.PushMessageReceiverImpl">
+            <intent-filter>
+                <!-- 接收 push 消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.coloros.mcssdk.PushService">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+
 ```
 
 
@@ -289,6 +320,7 @@ android {
 	    //设置小米和魅族的推送id和key
         Const.setMiUI_APP("APP_MIUI_ID", "APP_MIUI_KEY");
         Const.setFlyme_APP("APP_FLYME_ID", "APP_FLYME_KEY");
+        Const.setColor_APP("key", "secret");
 	    //初始化推送
         Push.register(this, BuildConfig.ISDEBUG, new PushInterfaceImpl(this));
 }

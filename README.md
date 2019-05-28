@@ -13,14 +13,19 @@
 >1. MIUI系统将使用[小米推送](http://dev.xiaomi.com/doc/?page_id=1670) 
 >2. Flyme系统将使用[魅族推送](https://open.flyme.cn/open-web/views/push.html?t=1476262864945)
 >3. EMUI系统将使用[华为推送](http://developer.huawei.com/push)
->4. 其他系统将使用[JPush推送](https://www.jiguang.cn)
+>4. 其他系统将使用[OPPO推送](https://push.oppo.com)
+>5. 其他系统将使用[VIVO推送](https://dev.vivo.com.cn)
+>6. 其他系统将使用[JPush推送](https://www.jiguang.cn)
+
 
 ### 集成
 >1. 将如下4个SDK集成到项目中
 >*  华为SDK   请自行去[官网](http://developer.huawei.com/push)下载(推荐)或者[点击这里](https://raw.githubusercontent.com/jiang111/AndroidPush/master/push/libs/HwPush_SDK_V2705.jar) 并添加依赖
 >*  小米SDK   请自行去[官网](http://dev.xiaomi.com/doc/?page_id=1670)下载(推荐)或者[点击这里](https://raw.githubusercontent.com/jiang111/AndroidPush/master/push/libs/MiPush_SDK_Client_3_1_2.jar) 并添加依赖
->*  魅族SDK   在app模块下依赖:compile 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
->*  JPushSDK 在app模块下依赖:compile 'cn.jiguang:jpush:2.1.8'
+>*  魅族SDK   在app模块下依赖:implementation 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
+>*  JPushSDK 在app模块下依赖:implementation 'cn.jiguang:jpush:2.1.8'
+>*  vivoSDK     请自行去官网下载
+>*  oppoSDK     请自行去官网下载
 >*  注意资源文件的配置,目前只有华为的需要,请去官网查看最新版是否需要这些资源 [华为推送官网](http://developer.huawei.com/push) [点我查看资源配置](https://github.com/jiang111/AndroidPush/tree/master/push/src/main)
 
 >2. 在app模块下新建包，包名为push(也可以叫其他名字),然后把如下代码全部拷贝进push包里 [点我查看代码](https://raw.githubusercontent.com/jiang111/AndroidPush/master/code.zip)
